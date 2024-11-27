@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometrie-Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleStart.css') }}">
+</head>
+<body>
+    <!-- Kreise oben -->
+    <div class="circles">
+        <a href="{{ url_for('choose_profile') }}" class="circle">1</a>
+        <div class="circle big">2</div> <!-- Kleine Kreise sind nicht anklickbar -->
+        <div class="circle grey">3</div>
+        <div class="circle grey">4</div>
+        <div class="circle grey">5</div>
+    </div>
+    
+    <h1>Wähle den Algorithmus</h1>
+    
+    <!-- Buttons -->
+    <div class="buttons">
+        <button data-url="{{ url_for('delaunay_auswahl') }}" onclick="redirectTo(this)">Delaunay-Dreiecke</button>
+        <button data-url="{{ url_for('weighted_voronoi') }}" onclick="redirectTo(this)">Weighted-Voronoi-Diagramme</button>
+        <button data-url="{{ url_for('voronoi') }}" onclick="redirectTo(this)">Voronoi-Diagramme</button>
+        <button data-url="{{ url_for('fibonacci') }}" onclick="redirectTo(this)">Dekonstruiertes Kreisdiagramm mit Fibonacci</button>
+    </div>
+    
+    <script>
+        function redirectTo(button) {
+            const url = button.getAttribute('data-url');
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>

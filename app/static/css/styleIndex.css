@@ -1,0 +1,61 @@
+/* Allgemeine Einstellungen für die Seite */
+@font-face {
+  font-family: 'SugarMagic';
+  src: url('../fonts/SugarMagic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'AbadiMT-Light';
+  src: url('../fonts/AbadiMT-Light.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'AbadiMT-Light', Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f9;
+}
+
+
+/* Container für Inhalt */
+.container {
+  text-align: center;
+}
+
+/* Stil für die "MathArt" Überschrift mit der "Sugar Magic" Schriftart */
+.title {
+  font-family: 'SugarMagic', sans-serif; /* Neue Schriftart */
+  font-size: 4rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+/* Stil für den Start-Button mit einem pastellfarbenen Farbverlauf */
+.start-button {
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  background: linear-gradient(45deg, #d6a3f3, #a8c8ff, #f1a8b8); /* Pastell-Farbverlauf */
+  background-size: 400% 400%; /* Größe des Farbverlaufs */
+  transition: background-position 0.8s ease, transform 0.3s ease;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Leichter Schatten */
+}
+
+/* Hover-Effekt für den Start-Button */
+.start-button:hover {
+  background-position: 100% 100%; /* Beweglicher Farbverlauf */
+  transform: scale(1.1); /* Vergrößerungseffekt */
+}

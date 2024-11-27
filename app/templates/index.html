@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathArt</title>
+    <!-- <link rel="stylesheet" href="styleIndex.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleIndex.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">MathArt</h1>
+        <a href="{{ url_for('choose_profile') }}" class="start-button">Start</a>
+    </div>
+</body>
+</html>

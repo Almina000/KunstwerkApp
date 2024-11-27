@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometrie-Tools</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleStart.css') }}">
+</head>
+<body>
+    <!-- Kreise oben -->
+    <div class="circles">
+        <a href="{{ url_for('choose_profile') }}" class="circle">1</a>
+        <a href="{{ url_for('choose_algorithm') }}" class="circle">2</a>
+        <div class="circle big">3</div>
+        <div class="circle grey">4</div>
+        <div class="circle grey">5</div>
+    </div>
+    
+    <h1>Wie sollen die Datenpunkte verteilt werden</h1>
+    
+    <!-- Buttons -->
+    <div class="buttons">
+        <a href="{{ url_for('delaunay_random') }}" class="button">Random</a>
+        <a href="{{ url_for('delaunay_haeufigkeit') }}" class="button">Nach Häufigekit</a>
+    </div>
+</body>
+</html>
