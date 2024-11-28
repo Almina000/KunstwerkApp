@@ -13,9 +13,25 @@ import os
 import wget
 import json
 
+import sys
+import threading
+
+
+# Erhalte den Profilnamen aus den Argumenten
+if len(sys.argv) < 2:
+    print("Profilname fehlt!")
+    sys.exit(1)
+
+profilename = sys.argv[1]
+
 # Setze den Pfad zum geckodriver
 geckodriver_path = 'C:/Users/rebec/OneDrive/Desktop/Dateien/FirefoxDriver/geckodriver.exe'
 firefox_path = 'C:/Program Files/Mozilla Firefox/firefox.exe'
+# Pfade zu Firefox und Geckodriver aus Umgebungsvariablen lesen
+#geckodriver_path = os.getenv('GECKODRIVER_PATH', 'C:/Users/rebec/OneDrive/Desktop/Dateien/FirefoxDriver/geckodriver.exe')
+#firefox_path = os.getenv('FIREFOX_BINARY_PATH', 'C:/Program Files/Mozilla Firefox/firefox.exe')
+
+
 
 # Initialisiere die Optionen für Firefox und setze den Pfad zur Binary
 options = Options()
@@ -89,16 +105,16 @@ except TimeoutException:
 
 #searched_name.send_keys("google")
 
-# Extrahiere den Profilnamen aus der Anfrage
-data = request.get_json()
-profilename = data.get('profilename')
+# # Extrahiere den Profilnamen aus der Anfrage
+# data = request.get_json()
+# profilename = data.get('profilename')
 
-# Überprüfen, ob der Profilname übergeben wurde
-if not profilename:
-    return jsonify({"error": "Profilname fehlt"}), 400
+# # Überprüfen, ob der Profilname übergeben wurde
+# if not profilename:
+#     return jsonify({"error": "Profilname fehlt"}), 400
     
 
-driver.get("https://www.instagram.com/{profilename}/")
+driver.get(f"https://www.instagram.com/{profilename}/")
 
 
 def scroll_and_collect_images(image_urls, path):
@@ -132,7 +148,7 @@ scroll_page(initial_scroll_count)
 
 # Finde und speichere Bilder
 image_urls = []
-path = os.path.join(os.getcwd(), "{profilename}Pics_new")
+path = os.path.join(os.getcwd(), f"{profilename}Pics_new")
 if not os.path.exists(path):
     os.mkdir(path)
 image_urls = scroll_and_collect_images(image_urls, path)
@@ -176,10 +192,10 @@ driver.quit()
 
 # Speichere die Daten in CSV-Dateien
 df_dates = pd.DataFrame({'Post URL': post_urls, 'Post Date': post_dates})
-df_dates.to_csv('instagram_post_dates_{profilename}.csv', index=False)
+df_dates.to_csv(f'instagram_post_dates_{profilename}.csv', index=False)
 
 df_hashtags = pd.DataFrame({'Post URL': post_urls, 'Hashtags': all_hashtags})
-df_hashtags.to_csv('instagram_post_hashtags_{profilename}.csv', index=False)
+df_hashtags.to_csv(f'instagram_post_hashtags_{profilename}.csv', index=False)
 
 print("Daten erfolgreich gespeichert!")
 

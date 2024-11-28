@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geometrie-Tools</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styleStart.css') }}">
+    <script>
+        // Funktion, um das Popup bei der Formularübermittlung anzuzeigen
+        function confirmFormSubmission(event) {
+            const userConfirmed = confirm("Möchten Sie das Profil wirklich verarbeiten?");
+            if (!userConfirmed) {
+                event.preventDefault(); // Verhindert das Absenden des Formulars
+            }
+        }
+    </script>
 </head>
 <body>
     <!-- Kreise oben -->
@@ -20,7 +29,7 @@
 
     <!-- Eingabefeld und Button -->
     <div class="input-with-button">
-        <form action="{{ url_for('print_profile') }}" method="post">
+        <form action="{{ url_for('print_profile') }}" method="post" onsubmit="confirmFormSubmission(event)">
             <input type="text" id="profilename" name="profile" placeholder="Profilname eingeben">
             <button type="submit">Script starten</button>
         </form>

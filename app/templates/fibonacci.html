@@ -5,8 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skizze Eingabe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styleAuswahl.css') }}" />
+    <script>
+      // Funktion zum Überprüfen des Scraper-Status
+      async function checkScraperStatus() {
+        try {
+          // Anfrage an den Server, um den Status zu prüfen
+          const response = await fetch("{{ url_for('scraper_status_endpoint') }}");
+          const data = await response.json();
+
+          if (data.status === "completed") {
+            // Scraper abgeschlossen -> Button aktivieren
+            document.getElementById("startButton").disabled = false;
+            document.getElementById("statusMessage").textContent = "Scraper abgeschlossen! Sie können fortfahren.";
+          } else {
+            // Scraper läuft noch -> Statusnachricht aktualisieren
+            document.getElementById("statusMessage").textContent = "Scraper wird ausgeführt, bitte warten...";
+          }
+        } catch (error) {
+          console.error("Fehler beim Abrufen des Scraper-Status:", error);
+          document.getElementById("statusMessage").textContent = "Fehler beim Überprüfen des Status.";
+        }
+      }
+
+      // Intervall zur regelmäßigen Statusprüfung
+      setInterval(checkScraperStatus, 5000); // Alle 5 Sekunden prüfen
+
+      // Funktion zur Navigation
+      function startArt() {
+        const triangles = parseInt(document.getElementById("triangles").value);
+        const circles = parseInt(document.getElementById("circles").value);
+        const rectangles = parseInt(document.getElementById("rectangles").value);
+        const total = triangles + circles + rectangles;
+
+        if (total <= 10) {
+          localStorage.setItem("shapeCounts", JSON.stringify({ triangles, circles, rectangles }));
+          window.location.href = "{{ url_for('artwork') }}";
+        } else {
+          document.getElementById("warning").style.display = "block";
+        }
+      }
+    </script>
   </head>
-  <body>
+  <body onload="checkScraperStatus()"> <!-- Statusprüfung bei Seitenaufruf starten -->
     <div id="startPage">
       <h2>Wählen Sie die Anzahl der Formen</h2>
       <label for="triangles">Dreiecke:</label>
@@ -23,18 +63,21 @@
 
       <p id="warning" style="color: red; display: none;">Die Gesamtanzahl der Formen darf maximal 10 sein.</p>
 
-      <button onclick="startArt()">Weiter</button>
+      <!-- Statusnachricht -->
+      <p id="statusMessage" style="color: blue;">Überprüfe Scraper-Status...</p>
+
+      <!-- Weiter-Button (initial deaktiviert) -->
+      <button id="startButton" onclick="startArt()" disabled>Weiter</button>
     </div>
 
     <script>
-      // Funktion, um die Gesamtanzahl zu überprüfen und den Warnhinweis anzuzeigen
+      // Aktualisiere Slider-Werte und überprüfe die Gesamtanzahl
       function checkTotal() {
         const triangles = parseInt(document.getElementById("triangles").value);
         const circles = parseInt(document.getElementById("circles").value);
         const rectangles = parseInt(document.getElementById("rectangles").value);
         const total = triangles + circles + rectangles;
 
-        // Warnung anzeigen, wenn die Gesamtanzahl größer als 10 ist
         if (total > 10) {
           document.getElementById("warning").style.display = "block";
         } else {
@@ -42,39 +85,18 @@
         }
       }
 
-      // Aktualisiere die Anzeigen für die Slider-Werte und überprüfe die Gesamtanzahl
       document.getElementById("triangles").oninput = function() {
         document.getElementById("triangleValue").textContent = this.value;
         checkTotal();
-      }
+      };
       document.getElementById("circles").oninput = function() {
         document.getElementById("circleValue").textContent = this.value;
         checkTotal();
-      }
+      };
       document.getElementById("rectangles").oninput = function() {
         document.getElementById("rectangleValue").textContent = this.value;
         checkTotal();
-      }
-
-      function startArt() {
-        // Lese die Werte aus den Slidern
-        const triangles = parseInt(document.getElementById("triangles").value);
-        const circles = parseInt(document.getElementById("circles").value);
-        const rectangles = parseInt(document.getElementById("rectangles").value);
-        const total = triangles + circles + rectangles;
-
-        // Prüfe, ob die Gesamtanzahl 10 oder weniger beträgt
-        if (total <= 10) {
-          // Speichere die Werte in LocalStorage
-          localStorage.setItem("shapeCounts", JSON.stringify({ triangles, circles, rectangles }));
-
-          // Navigiere zur zweiten Seite (Kunstwerkseite)
-          window.location.href = "{{ url_for('artwork') }}";
-        } else {
-          // Zeige eine Warnung, wenn die Gesamtanzahl über 10 liegt
-          document.getElementById("warning").style.display = "block";
-        }
-      }
+      };
     </script>
   </body>
 </html>
