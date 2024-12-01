@@ -25,7 +25,22 @@
         <a href="{{ url_for('choose_algorithm') }}" class="button">Top Hashtags</a>
         <a href="{{ url_for('choose_algorithm') }}" class="button">Top Months</a>
         <a href="{{ url_for('choose_algorithm') }}" class="button">Top Weeks</a>
-        <a href="{{ url_for('choose_algorithm') }}" class="button">PixelColor</a>
+        <!-- PixelColor Button -->
+        <a id="pixelColorButton" class="button" href="javascript:void(0);">PixelColor</a> 
     </div>
+
+    <!-- Skripte einbinden -->
+    <script src="{{ url_for('static', filename='js/readImages.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/readPixelsFromJson.js') }}"></script>
+    <script>
+        async function fetchAndGenerateImagesJson() {
+            const response = await fetch('/generate-images-json');
+            const data = await response.json();
+            console.log(data.message); // Bestätigung der Erstellung
+            await analyzeColors();
+        }
+    
+        document.getElementById('pixelColorButton').addEventListener('click', fetchAndGenerateImagesJson);
+    </script>
 </body>
 </html>

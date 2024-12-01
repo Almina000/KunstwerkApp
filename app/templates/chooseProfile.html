@@ -8,7 +8,7 @@
     <script>
         // Funktion, um das Popup bei der Formularübermittlung anzuzeigen
         function confirmFormSubmission(event) {
-            const userConfirmed = confirm("Möchten Sie das Profil wirklich verarbeiten?");
+            const userConfirmed = confirm("Möchten Sie das Profil wirklich verarbeiten? Dies kann bis zu 10min dauern.");
             if (!userConfirmed) {
                 event.preventDefault(); // Verhindert das Absenden des Formulars
             }

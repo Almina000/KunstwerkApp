@@ -4,8 +4,12 @@ import subprocess
 import threading  
 
 from flask import Flask, render_template, request
+from flask import Flask, send_from_directory
+from flask import Flask, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Mock: Status des Scrapers (dieser sollte dynamisch geändert werden)
 scraper_status = {"status": "running"}  # "running" oder "completed"
@@ -13,6 +17,16 @@ scraper_status = {"status": "running"}  # "running" oder "completed"
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/static/js/images.json')
+def serve_json():
+    return send_from_directory('static/js', 'images.json')
+
+@app.route('/generate-images-json')
+def generate_images_json():
+    subprocess.run(['node', 'app/static/js/readImages.js'])
+    return jsonify({'message': 'images.json wurde erstellt!'})
+
 #########################################################################################################
 #SCRAPER
 @app.route('/set-profile', methods=['POST'])
@@ -100,3 +114,4 @@ def success():
 @app.route('/test')
 def do_thing():
     return render_template('input.html')
+

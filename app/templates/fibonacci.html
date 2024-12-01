@@ -17,13 +17,19 @@
             // Scraper abgeschlossen -> Button aktivieren
             document.getElementById("startButton").disabled = false;
             document.getElementById("statusMessage").textContent = "Scraper abgeschlossen! Sie können fortfahren.";
-          } else {
-            // Scraper läuft noch -> Statusnachricht aktualisieren
+          } else if (data.status === "running") {
+            // Scraper läuft noch -> Button deaktivieren und Statusnachricht anzeigen
+            document.getElementById("startButton").disabled = true;
             document.getElementById("statusMessage").textContent = "Scraper wird ausgeführt, bitte warten...";
+          } else {
+            // Kein aktiver Scraper -> Button aktivieren
+            document.getElementById("startButton").disabled = false;
+            document.getElementById("statusMessage").textContent = "Scraper ist nicht aktiv. Sie können fortfahren.";
           }
         } catch (error) {
           console.error("Fehler beim Abrufen des Scraper-Status:", error);
-          document.getElementById("statusMessage").textContent = "Fehler beim Überprüfen des Status.";
+          document.getElementById("statusMessage").textContent = "Fehler beim Überprüfen des Status. Sie können fortfahren.";
+          document.getElementById("startButton").disabled = false; // Sicherheitshalber Button aktivieren
         }
       }
 
@@ -66,8 +72,8 @@
       <!-- Statusnachricht -->
       <p id="statusMessage" style="color: blue;">Überprüfe Scraper-Status...</p>
 
-      <!-- Weiter-Button (initial deaktiviert) -->
-      <button id="startButton" onclick="startArt()" disabled>Weiter</button>
+      <!-- Weiter-Button (initial aktiviert) -->
+      <button id="startButton" onclick="startArt()">Weiter</button>
     </div>
 
     <script>

@@ -7,6 +7,14 @@ if (!shapeCounts) {
 const { triangles, circles, rectangles } = shapeCounts;
 console.log(`Dreiecke: ${triangles}, Kreise: ${circles}, Rechtecke: ${rectangles}`);
 
+const pixelColors = JSON.parse(localStorage.getItem("pixelColors"));
+
+if (!pixelColors) {
+    console.error('Keine Pixel-Farben gefunden. Bitte analysiere die Bilder zuerst.');
+} else {
+    console.log('Pixel-Farben:', pixelColors);
+}
+
 const canvasWidth = 768;
 const canvasHeight = 1080;
 

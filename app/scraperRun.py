@@ -148,7 +148,8 @@ scroll_page(initial_scroll_count)
 
 # Finde und speichere Bilder
 image_urls = []
-path = os.path.join(os.getcwd(), f"{profilename}Pics_new")
+# path = os.path.join(os.getcwd(), f"{profilename}Pics_new")
+path = os.path.join(os.getcwd(), 'app', 'static', 'images', f"{profilename}Pics_new")
 if not os.path.exists(path):
     os.mkdir(path)
 image_urls = scroll_and_collect_images(image_urls, path)
