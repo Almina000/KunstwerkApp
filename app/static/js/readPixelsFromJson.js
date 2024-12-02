@@ -1,8 +1,15 @@
 
 // Hauptfunktion für die Farbanalyse
 async function analyzeColors() {
+    const profileName = process.argv[2]; // Erwartet den Profilnamen als CLI-Argument
+
+    if (!profileName) {
+      console.error('Kein Profilname angegeben! Das Skript benötigt einen Profilnamen.');
+      process.exit(1);
+    }
+
     console.log("analyzeColors() gestartet.");
-    const jsonFile = '/static/js/images.json'; // Pfad zur JSON-Datei mit Bildpfaden
+    const jsonFile = `/static/js/${profileName}_images.json`; // Pfad zur JSON-Datei mit Bildpfaden
     //const outputElement = document.getElementById('output');
 
     // Lade die JSON-Datei mit Bildpfaden

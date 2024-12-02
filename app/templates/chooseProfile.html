@@ -8,9 +8,15 @@
     <script>
         // Funktion, um das Popup bei der Formularübermittlung anzuzeigen
         function confirmFormSubmission(event) {
-            const userConfirmed = confirm("Möchten Sie das Profil wirklich verarbeiten? Dies kann bis zu 10min dauern.");
-            if (!userConfirmed) {
+            const profileInput = document.getElementById('profilename');
+            if (profileInput.value.trim() === "") {
+                alert("Bitte geben Sie einen Profilnamen ein.");
                 event.preventDefault(); // Verhindert das Absenden des Formulars
+            } else {
+                const userConfirmed = confirm("Möchten Sie das Profil wirklich verarbeiten? Dies kann bis zu 10min dauern.");
+                if (!userConfirmed) {
+                    event.preventDefault(); // Verhindert das Absenden des Formulars
+                }
             }
         }
     </script>

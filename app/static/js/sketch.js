@@ -1,5 +1,6 @@
 // sketch.js
-
+//_______________________________________________________________________________
+//VARIABLEN HOLEN
 const shapeCounts = JSON.parse(localStorage.getItem("shapeCounts"));
 if (!shapeCounts) {
   window.location.href = "index.html";
@@ -14,6 +15,17 @@ if (!pixelColors) {
 } else {
     console.log('Pixel-Farben:', pixelColors);
 }
+
+// const profileName = process.argv[2]; // Erwartet den Profilnamen als CLI-Argument
+
+// if (!profileName) {
+//   console.error('Kein Profilname angegeben! Das Skript benötigt einen Profilnamen.');
+//   process.exit(1);
+// }else {
+//   console.log('Profilname:', profileName);
+// }
+
+//___________________________________________________________________________________________
 
 const canvasWidth = 768;
 const canvasHeight = 1080;

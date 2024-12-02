@@ -6,36 +6,6 @@
     <title>Skizze Eingabe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styleAuswahl.css') }}" />
     <script>
-      // Funktion zum Überprüfen des Scraper-Status
-      async function checkScraperStatus() {
-        try {
-          // Anfrage an den Server, um den Status zu prüfen
-          const response = await fetch("{{ url_for('scraper_status_endpoint') }}");
-          const data = await response.json();
-
-          if (data.status === "completed") {
-            // Scraper abgeschlossen -> Button aktivieren
-            document.getElementById("startButton").disabled = false;
-            document.getElementById("statusMessage").textContent = "Scraper abgeschlossen! Sie können fortfahren.";
-          } else if (data.status === "running") {
-            // Scraper läuft noch -> Button deaktivieren und Statusnachricht anzeigen
-            document.getElementById("startButton").disabled = true;
-            document.getElementById("statusMessage").textContent = "Scraper wird ausgeführt, bitte warten...";
-          } else {
-            // Kein aktiver Scraper -> Button aktivieren
-            document.getElementById("startButton").disabled = false;
-            document.getElementById("statusMessage").textContent = "Scraper ist nicht aktiv. Sie können fortfahren.";
-          }
-        } catch (error) {
-          console.error("Fehler beim Abrufen des Scraper-Status:", error);
-          document.getElementById("statusMessage").textContent = "Fehler beim Überprüfen des Status. Sie können fortfahren.";
-          document.getElementById("startButton").disabled = false; // Sicherheitshalber Button aktivieren
-        }
-      }
-
-      // Intervall zur regelmäßigen Statusprüfung
-      setInterval(checkScraperStatus, 5000); // Alle 5 Sekunden prüfen
-
       // Funktion zur Navigation
       function startArt() {
         const triangles = parseInt(document.getElementById("triangles").value);
@@ -68,10 +38,7 @@
       <span id="rectangleValue">5</span><br>
 
       <p id="warning" style="color: red; display: none;">Die Gesamtanzahl der Formen darf maximal 10 sein.</p>
-
-      <!-- Statusnachricht -->
-      <p id="statusMessage" style="color: blue;">Überprüfe Scraper-Status...</p>
-
+      
       <!-- Weiter-Button (initial aktiviert) -->
       <button id="startButton" onclick="startArt()">Weiter</button>
     </div>

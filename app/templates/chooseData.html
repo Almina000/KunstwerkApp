@@ -19,6 +19,8 @@
     </div>
     
     <h1>Wähle den Datensatz</h1>
+
+    <div id="profile-container" data-profile="{{ profile }}"></div>
     
     <!-- Buttons -->
     <div class="buttons">
@@ -26,7 +28,7 @@
         <a href="{{ url_for('choose_algorithm') }}" class="button">Top Months</a>
         <a href="{{ url_for('choose_algorithm') }}" class="button">Top Weeks</a>
         <!-- PixelColor Button -->
-        <a id="pixelColorButton" class="button" href="javascript:void(0);">PixelColor</a> 
+        <a id="pixelColorButton" class="button" href="{{ url_for('choose_algorithm') }}">PixelColor</a> 
     </div>
 
     <!-- Skripte einbinden -->

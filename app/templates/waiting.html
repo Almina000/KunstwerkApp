@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitte warten...</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleStart.css') }}">
+</head>
+<body>
+
+    <!-- Hauptbereich mit Ladeanzeige -->
+    <h1>Bitte warten, der Vorgang läuft...</h1>
+    <div class="loader"></div>
+
+    <script>
+        // Überprüft regelmäßig, ob der Scraper abgeschlossen ist
+        function checkScraperStatus() {
+            fetch('/check_scraper_status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.finished) {
+                        // Wenn der Scraper fertig ist, Weiterleitung zu "choose_data"
+                        window.location.href = "{{ url_for('choose_data') }}";
+                    } else {
+                        // Wenn noch nicht fertig, alle 5 Sekunden erneut prüfen
+                        setTimeout(checkScraperStatus, 5000);
+                    }
+                });
+        }
+        // Initialer Aufruf der Überprüfung
+        checkScraperStatus();
+    </script>
+
+    <!-- CSS für die Ladeanzeige -->
+    <style>
+        .loader {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 8px solid transparent; /* Transparenter Rand */
+    border-top: 8px solid #d6a3f3; /* Startfarbe */
+    border-right: 8px solid #a8c8ff;
+    border-bottom: 8px solid #f1a8b8;
+    border-left: 8px solid #d6a3f3;
+    animation: spin 2s linear infinite, colorChange 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes colorChange {
+    0% {
+        border-top-color: #d6a3f3;
+        border-right-color: #a8c8ff;
+        border-bottom-color: #f1a8b8;
+        border-left-color: #d6a3f3;
+    }
+    25% {
+        border-top-color: #a8c8ff;
+        border-right-color: #f1a8b8;
+        border-bottom-color: #d6a3f3;
+        border-left-color: #a8c8ff;
+    }
+    50% {
+        border-top-color: #f1a8b8;
+        border-right-color: #d6a3f3;
+        border-bottom-color: #a8c8ff;
+        border-left-color: #f1a8b8;
+    }
+    75% {
+        border-top-color: #d6a3f3;
+        border-right-color: #a8c8ff;
+        border-bottom-color: #f1a8b8;
+        border-left-color: #d6a3f3;
+    }
+    100% {
+        border-top-color: #a8c8ff;
+        border-right-color: #f1a8b8;
+        border-bottom-color: #d6a3f3;
+        border-left-color: #a8c8ff;
+    }
+}
+
+    </style>
+    
+</body>
+</html>

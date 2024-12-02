@@ -6,8 +6,14 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-import time
 import pandas as pd
+from datetime import datetime
+import locale
+
+from collections import Counter
+import ast
+
+import time
 
 import os
 import wget
@@ -141,7 +147,7 @@ def scroll_page(scroll_count):
 # Variable für die Anzahl der Scrollvorgänge
 initial_scroll_count = 3
 additional_scroll_count = 2
-repeat_count = 5  # Anzahl der Wiederholungen des Scrollen-Daten-Auslesen-Zyklus
+repeat_count = 0  # Anzahl der Wiederholungen des Scrollen-Daten-Auslesen-Zyklus
 
 # Initiales Scrollen
 scroll_page(initial_scroll_count)
@@ -149,7 +155,7 @@ scroll_page(initial_scroll_count)
 # Finde und speichere Bilder
 image_urls = []
 # path = os.path.join(os.getcwd(), f"{profilename}Pics_new")
-path = os.path.join(os.getcwd(), 'app', 'static', 'images', f"{profilename}Pics_new")
+path = os.path.join(os.getcwd(), 'app', 'static', 'images', f"{profilename}_Pics")
 if not os.path.exists(path):
     os.mkdir(path)
 image_urls = scroll_and_collect_images(image_urls, path)
@@ -193,13 +199,135 @@ driver.quit()
 
 # Speichere die Daten in CSV-Dateien
 df_dates = pd.DataFrame({'Post URL': post_urls, 'Post Date': post_dates})
-df_dates.to_csv(f'instagram_post_dates_{profilename}.csv', index=False)
+df_dates.to_csv(f'{profilename}_date_data.csv', index=False)
 
 df_hashtags = pd.DataFrame({'Post URL': post_urls, 'Hashtags': all_hashtags})
-df_hashtags.to_csv(f'instagram_post_hashtags_{profilename}.csv', index=False)
+df_hashtags.to_csv(f'{profilename}_hashtag_data.csv', index=False)
 
 print("Daten erfolgreich gespeichert!")
 
 ###########################################################################################################
-#Json Datei für java erstellen
+#Transform Date Data:
+# Setze die Lokalisierung auf Deutsch
+try:
+    locale.setlocale(locale.LC_TIME, 'de_DE.UTF-8')  # Für Linux/Mac
+except locale.Error:
+    try:
+        locale.setlocale(locale.LC_TIME, 'de_DE')  # Für Windows -> deu
+    except locale.Error:
+        print("Die deutsche Lokalisierung ist auf diesem System nicht verfügbar.")
+        exit()
+
+print(locale.getlocale(locale.LC_TIME))
+# Daten laden
+
+base_path = os.getcwd()
+file_path = os.path.join(base_path, f'{profilename}_date_data.csv')
+print(file_path)
+
+try:
+    df_dates = pd.read_csv(file_path)
+except FileNotFoundError:
+    print(f'{profilename}_date_data.csv wurde nicht gefunden {file_path}')
+    exit()
+
+    
+# Funktion zur Bestimmung der Woche im Monat
+def week_of_month(date):
+    first_day = date.replace(day=1)
+    dom = date.day
+    adjusted_dom = dom + first_day.weekday()
+    return (adjusted_dom - 1) // 7 + 1
+
+
+# Konvertiere das Datum und aggregiere die Daten
+month_counts = {}
+week_counts = {}
+
+for _, row in df_dates.iterrows():
+    try:
+        # Datum parsen
+        post_date = datetime.strptime(row['Post Date'], '%d. %B %Y')  # Format anpassen für deutsche Monatsnamen
+
+        # Monat bestimmen (ohne Jahr)
+        month = post_date.strftime('%B')
+        if month not in month_counts:
+            month_counts[month] = 0
+        month_counts[month] += 1
+
+        # Woche bestimmen (ohne Monat und Jahr)
+        week = week_of_month(post_date)
+        week_key = f"W{week}"
+        if week_key not in week_counts:
+            week_counts[week_key] = 0
+        week_counts[week_key] += 1
+
+    except Exception as e:
+        print(f"Fehler beim Verarbeiten des Datums '{row['Post Date']}': {e}")
+
+# Dynamischer Speicherpfad
+base_path = os.path.join(os.getcwd(), 'app', 'static', 'js')
+
+# Sicherstellen, dass der Ordner existiert
+os.makedirs(base_path, exist_ok=True)
+
+# Monatsdaten speichern
+monthly_output_path = os.path.join(base_path, f"{profilename}_monthly_counts.json")
+with open(monthly_output_path, 'w', encoding='utf-8') as f:
+    json.dump({"monthly_counts": [{"month": month, "count": count} for month, count in month_counts.items()]}, f,
+              ensure_ascii=False, indent=4)
+
+print(f"Daten für Monate erfolgreich in '{monthly_output_path}' gespeichert!")
+
+# Wochendaten speichern
+weekly_output_path = os.path.join(base_path, f"{profilename}_weekly_counts.json")
+with open(weekly_output_path, 'w', encoding='utf-8') as f:
+    json.dump({"weekly_counts": [{"week": week, "count": count} for week, count in week_counts.items()]}, f,
+              ensure_ascii=False, indent=4)
+
+print(f"Daten für Wochen erfolgreich in '{weekly_output_path}' gespeichert!")
+
+###########################################################################################################################################
+# Transform Hashtag Data:
+
+#df_hashtags = pd.read_csv('C:/Users/rebec/OneDrive/Desktop/Dateien/Medieninformtik/BA/SeleniumScraper/instagram_post_hashtags.csv')
+base_path = os.getcwd()
+file_path = os.path.join(base_path, f'{profilename}_hashtag_data.csv')
+print(file_path)
+
+try:
+    df_hashtags = pd.read_csv(file_path)
+except FileNotFoundError:
+    print(f'{profilename}_hashtag_data.csv wurde nicht gefunden')
+    exit()
+
+# Alle Hashtags zu einer Liste zusammenfügen und zählen
+all_hashtags = []
+for hashtags in df_hashtags['Hashtags']:
+    try:
+        hashtags_list = ast.literal_eval(hashtags)  # Konvertiert String-Listen in tatsächliche Listen
+        all_hashtags.extend(hashtags_list)
+    except (ValueError, SyntaxError):
+        continue
+
+# Häufigkeit der Hashtags berechnen
+hashtag_counts = Counter(all_hashtags)
+
+# Daten im JavaScript-Format vorbereiten
+hashtag_data = [{"hashtag": tag, "count": count} for tag, count in hashtag_counts.items()]
+
+
+# Dynamischer Speicherpfad
+base_path = os.path.join(os.getcwd(), 'app', 'static', 'js')
+# Sicherstellen, dass der Ordner existiert
+os.makedirs(base_path, exist_ok=True)
+hashtag_output_path = os.path.join(base_path, f"{profilename}_hashtags_counts.json")
+# Daten in `data.js` speichern
+with open(hashtag_output_path, "w", encoding="utf-8") as js_file:
+    js_file.write("const hashtagData = ")
+    js_file.write(json.dumps(hashtag_data, indent=2))
+    js_file.write(";")
+
+print(f"{profilename}_hashtags_counts.json wurde erfolgreich erstellt und die Hashtag-Daten wurden gespeichert!")
+
 
