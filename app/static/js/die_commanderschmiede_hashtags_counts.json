@@ -1,0 +1,222 @@
+const hashtagData = [
+  {
+    "hashtag": "#castalight",
+    "count": 1
+  },
+  {
+    "hashtag": "#charity",
+    "count": 1
+  },
+  {
+    "hashtag": "#magicmomentsforlittleheroes",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtg",
+    "count": 34
+  },
+  {
+    "hashtag": "#mtggermany",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgcommunity",
+    "count": 62
+  },
+  {
+    "hashtag": "#magic",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgcontent",
+    "count": 1
+  },
+  {
+    "hashtag": "#magigthegathering",
+    "count": 1
+  },
+  {
+    "hashtag": "#wotc",
+    "count": 2
+  },
+  {
+    "hashtag": "#wizardofthecoast",
+    "count": 2
+  },
+  {
+    "hashtag": "#community",
+    "count": 2
+  },
+  {
+    "hashtag": "#magicdeutschland",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgcommander",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgdeck",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgedh",
+    "count": 1
+  },
+  {
+    "hashtag": "#edh",
+    "count": 34
+  },
+  {
+    "hashtag": "#mtgaddicts",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtglife",
+    "count": 2
+  },
+  {
+    "hashtag": "#magicthegathering",
+    "count": 32
+  },
+  {
+    "hashtag": "#commander",
+    "count": 32
+  },
+  {
+    "hashtag": "#deckbuilding",
+    "count": 30
+  },
+  {
+    "hashtag": "#cardgame",
+    "count": 30
+  },
+  {
+    "hashtag": "#gaming",
+    "count": 29
+  },
+  {
+    "hashtag": "#strategy",
+    "count": 29
+  },
+  {
+    "hashtag": "#mtgdeutschland",
+    "count": 31
+  },
+  {
+    "hashtag": "#edhdeutschland",
+    "count": 31
+  },
+  {
+    "hashtag": "#mtgcommunitydeutschland",
+    "count": 31
+  },
+  {
+    "hashtag": "#mtgdeckbuilding",
+    "count": 29
+  },
+  {
+    "hashtag": "#germanmtg",
+    "count": 29
+  },
+  {
+    "hashtag": "#mtgpost",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgaddicted",
+    "count": 27
+  },
+  {
+    "hashtag": "#mtgcombo",
+    "count": 27
+  },
+  {
+    "hashtag": "#mtgdecks",
+    "count": 27
+  },
+  {
+    "hashtag": "#mtgdecktechs",
+    "count": 27
+  },
+  {
+    "hashtag": "#combo",
+    "count": 27
+  },
+  {
+    "hashtag": "#tradingcards",
+    "count": 28
+  },
+  {
+    "hashtag": "#tradingcardgame",
+    "count": 27
+  },
+  {
+    "hashtag": "#mtgaddict",
+    "count": 27
+  },
+  {
+    "hashtag": "#viralpost",
+    "count": 11
+  },
+  {
+    "hashtag": "#marvel",
+    "count": 8
+  },
+  {
+    "hashtag": "#secretlair",
+    "count": 7
+  },
+  {
+    "hashtag": "#marvelxmtg",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgcard",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgcardgame",
+    "count": 1
+  },
+  {
+    "hashtag": "#commandermtg",
+    "count": 1
+  },
+  {
+    "hashtag": "#nerd",
+    "count": 1
+  },
+  {
+    "hashtag": "#gameplay",
+    "count": 1
+  },
+  {
+    "hashtag": "#commandcon",
+    "count": 1
+  },
+  {
+    "hashtag": "#f\u00fcrth",
+    "count": 1
+  },
+  {
+    "hashtag": "#zett9",
+    "count": 1
+  },
+  {
+    "hashtag": "#werwolf",
+    "count": 1
+  },
+  {
+    "hashtag": "#Duskmourn",
+    "count": 2
+  },
+  {
+    "hashtag": "#Precon",
+    "count": 2
+  },
+  {
+    "hashtag": "#upgrade",
+    "count": 2
+  }
+];

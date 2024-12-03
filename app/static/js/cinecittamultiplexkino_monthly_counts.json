@@ -2,7 +2,15 @@
     "monthly_counts": [
         {
             "month": "November",
-            "count": 35
+            "count": 32
+        },
+        {
+            "month": "March",
+            "count": 1
+        },
+        {
+            "month": "December",
+            "count": 3
         }
     ]
 }

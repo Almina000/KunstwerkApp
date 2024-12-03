@@ -1,12 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 
+console.log('Datei gestartet!');
+
 const profileName = process.argv[2]; // Erwartet den Profilnamen als CLI-Argument
 
 if (!profileName) {
   console.error('Kein Profilname angegeben! Das Skript benötigt einen Profilnamen.');
   process.exit(1);
 }
+console.log(`ProfilName in readImages: ${profileName}`);
 
 // Der Pfad zum Ordner, den du durchsuchen möchtest
 const directoryPath = path.join(__dirname, `../images/${profileName}_Pics`);
@@ -34,6 +37,7 @@ function listImages(dirPath) {
    const outputFilePath = path.join(__dirname, `${profileName}_images.json`);
    fs.writeFileSync(outputFilePath, JSON.stringify(imagePaths, null, 2), 'utf-8');
    console.log('Die Datei images.json wurde erstellt!');
+   console.log(`Speicherort der Datei: ${path.resolve(outputFilePath)}`);
 }
 
 // Funktion zur Überprüfung, ob die Datei eine Bilddatei ist
@@ -43,4 +47,13 @@ function isImageFile(filename) {
 }
 
 // Die Funktion ausführen
-listImages(directoryPath);
+// listImages(directoryPath);
+
+try {
+    // Der bestehende Code zum Lesen der Verzeichnisse
+    listImages(directoryPath);
+  } catch (error) {
+    console.error('Ein Fehler ist aufgetreten:', error);
+    process.exit(1);
+  }
+  

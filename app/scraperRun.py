@@ -145,9 +145,9 @@ def scroll_page(scroll_count):
 
 
 # Variable für die Anzahl der Scrollvorgänge
-initial_scroll_count = 3
-additional_scroll_count = 2
-repeat_count = 0  # Anzahl der Wiederholungen des Scrollen-Daten-Auslesen-Zyklus
+initial_scroll_count = 3 # >3
+additional_scroll_count = 0 #> 2
+repeat_count = 0  # Anzahl der Wiederholungen des Scrollen-Daten-Auslesen-Zyklus --> 5
 
 # Initiales Scrollen
 scroll_page(initial_scroll_count)
@@ -209,29 +209,54 @@ print("Daten erfolgreich gespeichert!")
 ###########################################################################################################
 #Transform Date Data:
 # Setze die Lokalisierung auf Deutsch
+# try:
+#     locale.setlocale(locale.LC_TIME, 'de_DE.UTF-8')  # Für Linux/Mac
+# except locale.Error:
+#     try:
+#         locale.setlocale(locale.LC_TIME, 'de_DE')  # Für Windows -> deu
+#     except locale.Error:
+#         print("Die deutsche Lokalisierung ist auf diesem System nicht verfügbar.")
+#         exit()
+# Übersetzung deutscher Monatsnamen in englische Monatsnamen
+german_months = {
+    "Januar": "January",
+    "Februar": "February",
+    "März": "March",
+    "April": "April",
+    "Mai": "May",
+    "Juni": "June",
+    "Juli": "July",
+    "August": "August",
+    "September": "September",
+    "Oktober": "October",
+    "November": "November",
+    "Dezember": "December"
+}
+
+# Lokalisierung setzen
 try:
-    locale.setlocale(locale.LC_TIME, 'de_DE.UTF-8')  # Für Linux/Mac
+    locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')  # Für Linux/Mac
 except locale.Error:
     try:
-        locale.setlocale(locale.LC_TIME, 'de_DE')  # Für Windows -> deu
+        locale.setlocale(locale.LC_TIME, 'en_US')  # Für Windows
     except locale.Error:
         print("Die deutsche Lokalisierung ist auf diesem System nicht verfügbar.")
         exit()
 
-print(locale.getlocale(locale.LC_TIME))
-# Daten laden
+print(f"Aktuelle Lokalisierung: {locale.getlocale(locale.LC_TIME)}")
 
+# Dateipfad zur CSV
 base_path = os.getcwd()
 file_path = os.path.join(base_path, f'{profilename}_date_data.csv')
-print(file_path)
+print(f"Dateipfad: {file_path}")
 
+# CSV-Datei laden
 try:
     df_dates = pd.read_csv(file_path)
 except FileNotFoundError:
     print(f'{profilename}_date_data.csv wurde nicht gefunden {file_path}')
     exit()
 
-    
 # Funktion zur Bestimmung der Woche im Monat
 def week_of_month(date):
     first_day = date.replace(day=1)
@@ -239,6 +264,14 @@ def week_of_month(date):
     adjusted_dom = dom + first_day.weekday()
     return (adjusted_dom - 1) // 7 + 1
 
+# Funktion zum Normalisieren von Datumsangaben und Umwandeln deutscher Monatsnamen
+def normalize_date_format(date_string):
+    normalized = date_string.replace('.', '. ').replace('  ', ' ').strip()
+    for de_month, en_month in german_months.items():
+        if de_month in normalized:
+            normalized = normalized.replace(de_month, en_month)
+            break  # Beende die Schleife, wenn der Monat gefunden wurde
+    return normalized
 
 # Konvertiere das Datum und aggregiere die Daten
 month_counts = {}
@@ -246,33 +279,30 @@ week_counts = {}
 
 for _, row in df_dates.iterrows():
     try:
-        # Datum parsen
-        post_date = datetime.strptime(row['Post Date'], '%d. %B %Y')  # Format anpassen für deutsche Monatsnamen
+        # Datum normalisieren und parsen
+        post_date_str = normalize_date_format(row['Post Date'])
+        post_date = datetime.strptime(post_date_str, '%d. %B %Y')
 
-        # Monat bestimmen (ohne Jahr)
+        # Monat bestimmen
         month = post_date.strftime('%B')
-        if month not in month_counts:
-            month_counts[month] = 0
-        month_counts[month] += 1
+        month_counts[month] = month_counts.get(month, 0) + 1
 
-        # Woche bestimmen (ohne Monat und Jahr)
+        # Woche bestimmen
         week = week_of_month(post_date)
         week_key = f"W{week}"
-        if week_key not in week_counts:
-            week_counts[week_key] = 0
-        week_counts[week_key] += 1
+        week_counts[week_key] = week_counts.get(week_key, 0) + 1
 
     except Exception as e:
         print(f"Fehler beim Verarbeiten des Datums '{row['Post Date']}': {e}")
 
 # Dynamischer Speicherpfad
-base_path = os.path.join(os.getcwd(), 'app', 'static', 'js')
+output_base_path = os.path.join(base_path, 'app', 'static', 'js')
 
 # Sicherstellen, dass der Ordner existiert
-os.makedirs(base_path, exist_ok=True)
+os.makedirs(output_base_path, exist_ok=True)
 
 # Monatsdaten speichern
-monthly_output_path = os.path.join(base_path, f"{profilename}_monthly_counts.json")
+monthly_output_path = os.path.join(output_base_path, f"{profilename}_monthly_counts.json")
 with open(monthly_output_path, 'w', encoding='utf-8') as f:
     json.dump({"monthly_counts": [{"month": month, "count": count} for month, count in month_counts.items()]}, f,
               ensure_ascii=False, indent=4)
@@ -280,13 +310,12 @@ with open(monthly_output_path, 'w', encoding='utf-8') as f:
 print(f"Daten für Monate erfolgreich in '{monthly_output_path}' gespeichert!")
 
 # Wochendaten speichern
-weekly_output_path = os.path.join(base_path, f"{profilename}_weekly_counts.json")
+weekly_output_path = os.path.join(output_base_path, f"{profilename}_weekly_counts.json")
 with open(weekly_output_path, 'w', encoding='utf-8') as f:
     json.dump({"weekly_counts": [{"week": week, "count": count} for week, count in week_counts.items()]}, f,
               ensure_ascii=False, indent=4)
 
 print(f"Daten für Wochen erfolgreich in '{weekly_output_path}' gespeichert!")
-
 ###########################################################################################################################################
 # Transform Hashtag Data:
 

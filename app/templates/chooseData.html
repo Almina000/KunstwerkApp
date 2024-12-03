@@ -34,7 +34,7 @@
     <!-- Skripte einbinden -->
     <script src="{{ url_for('static', filename='js/readImages.js') }}"></script>
     <script src="{{ url_for('static', filename='js/readPixelsFromJson.js') }}"></script>
-    <script>
+    <!-- <script>
         async function fetchAndGenerateImagesJson() {
             const response = await fetch('/generate-images-json');
             const data = await response.json();
@@ -43,6 +43,40 @@
         }
     
         document.getElementById('pixelColorButton').addEventListener('click', fetchAndGenerateImagesJson);
+    </script> -->
+    <script>
+        async function fetchAndGenerateImagesJson() {
+            console.log("fetchAndGenerateImagesJson() wurde aufgerufen."); // Log-Ausgabe beim Aufruf der Funktion
+    
+            try {
+                console.log("Starte Fetch-Anfrage an /generate-images-json."); // Log-Ausgabe vor der Fetch-Anfrage
+                const response = await fetch('/generate-images-json');
+                console.log("Antwort vom Server erhalten."); // Log-Ausgabe nach der Antwort vom Server
+    
+                if (!response.ok) {
+                    console.error("Fehler: Die Antwort des Servers war nicht erfolgreich."); // Fehlerbehandlung für unzureichende Antwort
+                    return;
+                }
+    
+                const data = await response.json();
+                console.log("Daten aus der JSON-Antwort:", data); // Log-Ausgabe der erhaltenen Daten
+    
+                console.log(data.message); // Bestätigung der Erstellung
+    
+                console.log("Starte die Analyse der Farben."); // Log-Ausgabe vor dem Start der Farb-Analyse
+                await analyzeColors();
+                console.log("Analyse der Farben abgeschlossen."); // Log-Ausgabe nach Abschluss der Farb-Analyse
+    
+            } catch (error) {
+                console.error("Ein Fehler ist aufgetreten bei fetchAndGenerateImagesJson:", error); // Fehlerbehandlung für try-catch
+            }
+        }
+    
+        document.getElementById('pixelColorButton').addEventListener('click', () => {
+            console.log("Pixel-Farben-Button wurde geklickt."); // Log-Ausgabe beim Klick auf den Button
+            fetchAndGenerateImagesJson();
+        });
     </script>
+    
 </body>
 </html>

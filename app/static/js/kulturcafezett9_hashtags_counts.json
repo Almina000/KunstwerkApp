@@ -1,0 +1,566 @@
+const hashtagData = [
+  {
+    "hashtag": "#jugendarbeitf\u00fcrth",
+    "count": 2
+  },
+  {
+    "hashtag": "#fuerth",
+    "count": 6
+  },
+  {
+    "hashtag": "#jugendarbeit",
+    "count": 14
+  },
+  {
+    "hashtag": "#zett9",
+    "count": 14
+  },
+  {
+    "hashtag": "#fuerth_de",
+    "count": 13
+  },
+  {
+    "hashtag": "#kulturfuerth",
+    "count": 1
+  },
+  {
+    "hashtag": "#podcast",
+    "count": 1
+  },
+  {
+    "hashtag": "#diy",
+    "count": 1
+  },
+  {
+    "hashtag": "#ausstellung",
+    "count": 2
+  },
+  {
+    "hashtag": "#smash",
+    "count": 1
+  },
+  {
+    "hashtag": "#tunier",
+    "count": 1
+  },
+  {
+    "hashtag": "#metal",
+    "count": 5
+  },
+  {
+    "hashtag": "#blackmetal",
+    "count": 1
+  },
+  {
+    "hashtag": "#subkultur",
+    "count": 1
+  },
+  {
+    "hashtag": "#concert",
+    "count": 2
+  },
+  {
+    "hashtag": "#livemusic",
+    "count": 1
+  },
+  {
+    "hashtag": "#opaskleinemetalkneipe",
+    "count": 1
+  },
+  {
+    "hashtag": "#djing",
+    "count": 1
+  },
+  {
+    "hashtag": "#hobbydjing",
+    "count": 1
+  },
+  {
+    "hashtag": "#singin",
+    "count": 3
+  },
+  {
+    "hashtag": "#openstage",
+    "count": 2
+  },
+  {
+    "hashtag": "#openmic",
+    "count": 1
+  },
+  {
+    "hashtag": "#jamsession",
+    "count": 1
+  },
+  {
+    "hashtag": "#kulturf\u00fcrth",
+    "count": 1
+  },
+  {
+    "hashtag": "#art",
+    "count": 1
+  },
+  {
+    "hashtag": "#artevent",
+    "count": 1
+  },
+  {
+    "hashtag": "#n\u00fcrnberg",
+    "count": 2
+  },
+  {
+    "hashtag": "#f\u00fcrth",
+    "count": 11
+  },
+  {
+    "hashtag": "#drinkanddraw",
+    "count": 1
+  },
+  {
+    "hashtag": "#VIOLET",
+    "count": 1
+  },
+  {
+    "hashtag": "#FLINTA",
+    "count": 1
+  },
+  {
+    "hashtag": "#workshops",
+    "count": 2
+  },
+  {
+    "hashtag": "#jugendarbeitfuerth",
+    "count": 2
+  },
+  {
+    "hashtag": "#jugendrat",
+    "count": 1
+  },
+  {
+    "hashtag": "#echtf\u00fcrth",
+    "count": 1
+  },
+  {
+    "hashtag": "#poetry",
+    "count": 1
+  },
+  {
+    "hashtag": "#poetryabend",
+    "count": 1
+  },
+  {
+    "hashtag": "#spokenword",
+    "count": 1
+  },
+  {
+    "hashtag": "#poesie",
+    "count": 2
+  },
+  {
+    "hashtag": "#worte",
+    "count": 1
+  },
+  {
+    "hashtag": "#crafting",
+    "count": 1
+  },
+  {
+    "hashtag": "#dance",
+    "count": 1
+  },
+  {
+    "hashtag": "#moderndance",
+    "count": 1
+  },
+  {
+    "hashtag": "#vibing",
+    "count": 1
+  },
+  {
+    "hashtag": "#jugendarbeit_fuerth",
+    "count": 6
+  },
+  {
+    "hashtag": "#jugendkulturhausotto",
+    "count": 1
+  },
+  {
+    "hashtag": "#otto",
+    "count": 1
+  },
+  {
+    "hashtag": "#connect",
+    "count": 1
+  },
+  {
+    "hashtag": "#outdoor",
+    "count": 1
+  },
+  {
+    "hashtag": "#terasse",
+    "count": 1
+  },
+  {
+    "hashtag": "#umbau",
+    "count": 1
+  },
+  {
+    "hashtag": "#kulturcafe",
+    "count": 1
+  },
+  {
+    "hashtag": "#recap",
+    "count": 1
+  },
+  {
+    "hashtag": "#3",
+    "count": 1
+  },
+  {
+    "hashtag": "#meddlamhain",
+    "count": 3
+  },
+  {
+    "hashtag": "#f\u00fcrthfestival",
+    "count": 4
+  },
+  {
+    "hashtag": "#openair",
+    "count": 2
+  },
+  {
+    "hashtag": "#hiraes",
+    "count": 2
+  },
+  {
+    "hashtag": "#headliner",
+    "count": 1
+  },
+  {
+    "hashtag": "#melodicdeathmetal",
+    "count": 2
+  },
+  {
+    "hashtag": "#meddl",
+    "count": 3
+  },
+  {
+    "hashtag": "#band",
+    "count": 2
+  },
+  {
+    "hashtag": "#metalfranken",
+    "count": 2
+  },
+  {
+    "hashtag": "#metalcommunity",
+    "count": 2
+  },
+  {
+    "hashtag": "#heavyculture",
+    "count": 2
+  },
+  {
+    "hashtag": "#heavyart",
+    "count": 2
+  },
+  {
+    "hashtag": "#live",
+    "count": 2
+  },
+  {
+    "hashtag": "#show",
+    "count": 2
+  },
+  {
+    "hashtag": "#covenrites",
+    "count": 2
+  },
+  {
+    "hashtag": "#festival",
+    "count": 2
+  },
+  {
+    "hashtag": "#aboutlastweekend",
+    "count": 1
+  },
+  {
+    "hashtag": "#aboutlastfriday",
+    "count": 1
+  },
+  {
+    "hashtag": "#music",
+    "count": 1
+  },
+  {
+    "hashtag": "#musik",
+    "count": 1
+  },
+  {
+    "hashtag": "#umsonstunddrau\u00dfen",
+    "count": 1
+  },
+  {
+    "hashtag": "#torrentialrain",
+    "count": 1
+  },
+  {
+    "hashtag": "#beyondthelastcoast",
+    "count": 1
+  },
+  {
+    "hashtag": "#exhorra",
+    "count": 1
+  },
+  {
+    "hashtag": "#metalcore",
+    "count": 1
+  },
+  {
+    "hashtag": "#modernmetal",
+    "count": 1
+  },
+  {
+    "hashtag": "#kopfundkragen",
+    "count": 1
+  },
+  {
+    "hashtag": "#supportyourlocalscene",
+    "count": 1
+  },
+  {
+    "hashtag": "#grundgesetz",
+    "count": 1
+  },
+  {
+    "hashtag": "#kultur",
+    "count": 2
+  },
+  {
+    "hashtag": "#jugendkultur",
+    "count": 2
+  },
+  {
+    "hashtag": "#gesang",
+    "count": 1
+  },
+  {
+    "hashtag": "#games",
+    "count": 1
+  },
+  {
+    "hashtag": "#comics",
+    "count": 1
+  },
+  {
+    "hashtag": "#cosplay",
+    "count": 1
+  },
+  {
+    "hashtag": "#nerdlife",
+    "count": 1
+  },
+  {
+    "hashtag": "#ukulele",
+    "count": 1
+  },
+  {
+    "hashtag": "#keinebezahltewerbung",
+    "count": 1
+  },
+  {
+    "hashtag": "#phialane",
+    "count": 1
+  },
+  {
+    "hashtag": "#somicmusic",
+    "count": 1
+  },
+  {
+    "hashtag": "#frisbi",
+    "count": 1
+  },
+  {
+    "hashtag": "#realschule",
+    "count": 1
+  },
+  {
+    "hashtag": "#wirtschaftsschule",
+    "count": 1
+  },
+  {
+    "hashtag": "#jugendarbeitist\u00fcberall",
+    "count": 2
+  },
+  {
+    "hashtag": "#awareness",
+    "count": 1
+  },
+  {
+    "hashtag": "#barrierefrei",
+    "count": 1
+  },
+  {
+    "hashtag": "#commandcon",
+    "count": 1
+  },
+  {
+    "hashtag": "#commandermtg",
+    "count": 1
+  },
+  {
+    "hashtag": "#commanderplayer",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgaddicts",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgcommunity",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgcommander",
+    "count": 1
+  },
+  {
+    "hashtag": "#mtgevents",
+    "count": 1
+  },
+  {
+    "hashtag": "#conlife",
+    "count": 1
+  },
+  {
+    "hashtag": "#edh",
+    "count": 1
+  },
+  {
+    "hashtag": "#edhgermany",
+    "count": 1
+  },
+  {
+    "hashtag": "#edhevents",
+    "count": 1
+  },
+  {
+    "hashtag": "#TSIF23",
+    "count": 2
+  },
+  {
+    "hashtag": "#stageisfemale",
+    "count": 2
+  },
+  {
+    "hashtag": "#punk",
+    "count": 1
+  },
+  {
+    "hashtag": "#vortrag",
+    "count": 1
+  },
+  {
+    "hashtag": "#bands",
+    "count": 1
+  },
+  {
+    "hashtag": "#DJ",
+    "count": 2
+  },
+  {
+    "hashtag": "#growling",
+    "count": 1
+  },
+  {
+    "hashtag": "#shouting",
+    "count": 1
+  },
+  {
+    "hashtag": "#screaming",
+    "count": 1
+  },
+  {
+    "hashtag": "#sound",
+    "count": 1
+  },
+  {
+    "hashtag": "#melodie",
+    "count": 1
+  },
+  {
+    "hashtag": "#b\u00fchnenpr\u00e4senz",
+    "count": 1
+  },
+  {
+    "hashtag": "#empowerment",
+    "count": 1
+  },
+  {
+    "hashtag": "#raumfrei",
+    "count": 1
+  },
+  {
+    "hashtag": "#gruppentreffen",
+    "count": 1
+  },
+  {
+    "hashtag": "#kollektiv",
+    "count": 1
+  },
+  {
+    "hashtag": "#jungendkultur",
+    "count": 1
+  },
+  {
+    "hashtag": "#jungeKultur",
+    "count": 1
+  },
+  {
+    "hashtag": "#hiphop",
+    "count": 2
+  },
+  {
+    "hashtag": "#lindenhainf\u00fcrth",
+    "count": 1
+  },
+  {
+    "hashtag": "#rap",
+    "count": 1
+  },
+  {
+    "hashtag": "#069monalisa",
+    "count": 1
+  },
+  {
+    "hashtag": "#protestgarten",
+    "count": 1
+  },
+  {
+    "hashtag": "#lindenhain",
+    "count": 1
+  },
+  {
+    "hashtag": "#metropolregion",
+    "count": 1
+  },
+  {
+    "hashtag": "#umsonstunddraussen",
+    "count": 1
+  },
+  {
+    "hashtag": "#liz",
+    "count": 1
+  },
+  {
+    "hashtag": "#futurebae",
+    "count": 1
+  },
+  {
+    "hashtag": "#eocrew",
+    "count": 1
+  },
+  {
+    "hashtag": "#onida",
+    "count": 1
+  }
+];

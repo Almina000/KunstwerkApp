@@ -1,7 +1,7 @@
 const hashtagData = [
   {
     "hashtag": "#Cinecitta",
-    "count": 3
+    "count": 4
   },
   {
     "hashtag": "#KinoErlebnis",
@@ -36,6 +36,18 @@ const hashtagData = [
     "count": 1
   },
   {
+    "hashtag": "#MUFASA",
+    "count": 1
+  },
+  {
+    "hashtag": "#SneakPreview",
+    "count": 2
+  },
+  {
+    "hashtag": "#Film\u00dcberraschung",
+    "count": 1
+  },
+  {
     "hashtag": "#Vaiana2",
     "count": 1
   },
@@ -49,7 +61,7 @@ const hashtagData = [
   },
   {
     "hashtag": "#sneakpreview",
-    "count": 6
+    "count": 5
   },
   {
     "hashtag": "#BlackDogFilm",
@@ -229,10 +241,6 @@ const hashtagData = [
   },
   {
     "hashtag": "#HorrorMovies",
-    "count": 1
-  },
-  {
-    "hashtag": "#SneakPreview",
     "count": 1
   },
   {

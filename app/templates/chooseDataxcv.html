@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datensätze</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleStart.css') }}">
+</head>
+<body>
+    <div class="circles">
+        <a href="{{ url_for('choose_profile') }}" class="circle">1</a>
+        <div class="circle big">2</div>
+        <div class="circle grey">3</div>
+        <div class="circle grey">4</div>
+        <div class="circle grey">5</div>
+    </div>
+    <h1>Wähle den Datensatz</h1>
+
+    <div id="profile-container" data-profile="{{ profile }}"></div>
+
+    <div class="buttons">
+        <a href="{{ url_for('choose_algorithm') }}" class="button">Top Hashtags</a>
+        <a href="{{ url_for('choose_algorithm') }}" class="button">Top Months</a>
+        <a href="{{ url_for('choose_algorithm') }}" class="button">Top Weeks</a>
+        <button id="pixelColorButton" class="button">PixelColor</button>
+    </div>
+
+    <script>
+        document.getElementById('pixelColorButton').addEventListener('click', function() {
+            const profileName = document.getElementById('profile-container').dataset.profile;
+            
+            if (!profileName) {
+                alert('Kein Profilname gefunden!');
+                return;
+            }
+
+            // readImages.js laden
+            const scriptReadImages = document.createElement('script');
+            scriptReadImages.src = "{{ url_for('static', filename='js/readImages.js') }}";
+            document.body.appendChild(scriptReadImages);
+
+            scriptReadImages.onload = function() {
+                console.log('readImages.js wurde geladen.');
+
+                // Profilname übergeben
+                window.profileName = profileName;
+
+                // Nach dem Laden von readImages.js, readPixelsFromJson.js laden
+                const scriptReadPixels = document.createElement('script');
+                scriptReadPixels.src = "{{ url_for('static', filename='js/readPixelsFromJson.js') }}";
+                document.body.appendChild(scriptReadPixels);
+
+                scriptReadPixels.onload = function() {
+                    console.log('readPixelsFromJson.js wurde geladen.');
+                };
+            };
+        });
+    </script>
+</body>
+</html>

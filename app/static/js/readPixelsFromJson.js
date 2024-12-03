@@ -3,6 +3,8 @@
 async function analyzeColors() {
     const profileName = process.argv[2]; // Erwartet den Profilnamen als CLI-Argument
 
+    console.log('ProfilName readPixels', profileName);
+
     if (!profileName) {
       console.error('Kein Profilname angegeben! Das Skript benötigt einen Profilnamen.');
       process.exit(1);

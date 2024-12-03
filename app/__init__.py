@@ -23,12 +23,26 @@ def serve_json():
 @app.route('/generate-images-json')
 def generate_images_json():
     profile_name = session.get('profile_name')
+
+    logging.info(f'Profilname erhalten init.py: {profile_name}')
     
     if not profile_name:
+        logging.error('Profilname fehlt in der Session.')
         return jsonify({'error': 'Profilname fehlt'}), 400
     
     script_path = os.path.join(os.path.dirname(__file__), 'static/js/readImages.js')
-    subprocess.run(['node', script_path, profile_name])
+    logging.info(f'Script wird ausgeführt: {script_path}')
+    #subprocess.run(['node', script_path, profile_name])
+
+    result = subprocess.run(['node', script_path, profile_name], capture_output=True)
+
+    # Log-Ausgabe für die Konsolenausgabe des Scripts
+    if result.returncode == 0:
+        logging.info('Script readImages.js wurde erfolgreich ausgeführt.')
+        logging.info(f'Script-Ausgabe: {result.stdout.decode()}')
+    else:
+        logging.error(f'Script readImages.js wurde mit einem Fehler beendet. Rückgabecode: {result.returncode}')
+        logging.error(f'Script-Fehlerausgabe: {result.stderr.decode()}')
     
     return jsonify({'message': 'images.json wurde erstellt!'})
 
@@ -43,6 +57,7 @@ def print_profile():
     if not profile:
         return jsonify({"error": "Profilname fehlt"}), 400
     
+     
     # Speichere den Profilnamen in der Sitzung
     session['profile_name'] = profile
 

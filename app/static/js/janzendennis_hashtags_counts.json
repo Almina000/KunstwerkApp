@@ -1,0 +1,322 @@
+const hashtagData = [
+  {
+    "hashtag": "#smalltattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#bielefeld",
+    "count": 18
+  },
+  {
+    "hashtag": "#bielefeldtattoo",
+    "count": 17
+  },
+  {
+    "hashtag": "#nrw",
+    "count": 1
+  },
+  {
+    "hashtag": "#nrwtattoo",
+    "count": 16
+  },
+  {
+    "hashtag": "#fineline",
+    "count": 20
+  },
+  {
+    "hashtag": "#finelinetattoo",
+    "count": 2
+  },
+  {
+    "hashtag": "#flowers",
+    "count": 4
+  },
+  {
+    "hashtag": "#bookings",
+    "count": 5
+  },
+  {
+    "hashtag": "#terminvergabe",
+    "count": 3
+  },
+  {
+    "hashtag": "#tattoobielefeld",
+    "count": 3
+  },
+  {
+    "hashtag": "#bielefeldcity",
+    "count": 3
+  },
+  {
+    "hashtag": "#jdtattoo",
+    "count": 8
+  },
+  {
+    "hashtag": "#seeusoon",
+    "count": 2
+  },
+  {
+    "hashtag": "#leaves",
+    "count": 1
+  },
+  {
+    "hashtag": "#leaftattoo",
+    "count": 5
+  },
+  {
+    "hashtag": "#bl\u00e4tter",
+    "count": 5
+  },
+  {
+    "hashtag": "#freihand",
+    "count": 1
+  },
+  {
+    "hashtag": "#freihandtattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#botanical",
+    "count": 1
+  },
+  {
+    "hashtag": "#floral",
+    "count": 13
+  },
+  {
+    "hashtag": "#floraltattoo",
+    "count": 15
+  },
+  {
+    "hashtag": "#flowertattoo",
+    "count": 3
+  },
+  {
+    "hashtag": "#iamink",
+    "count": 14
+  },
+  {
+    "hashtag": "#emallacartridge",
+    "count": 1
+  },
+  {
+    "hashtag": "#cherryblossom",
+    "count": 5
+  },
+  {
+    "hashtag": "#kirschbl\u00fcten",
+    "count": 5
+  },
+  {
+    "hashtag": "#backtattoo",
+    "count": 3
+  },
+  {
+    "hashtag": "#spinetattoo",
+    "count": 4
+  },
+  {
+    "hashtag": "#Flowers",
+    "count": 7
+  },
+  {
+    "hashtag": "#Flowertattoo",
+    "count": 8
+  },
+  {
+    "hashtag": "#Flower",
+    "count": 10
+  },
+  {
+    "hashtag": "#blumentattoo",
+    "count": 8
+  },
+  {
+    "hashtag": "#blumen",
+    "count": 11
+  },
+  {
+    "hashtag": "#plants",
+    "count": 9
+  },
+  {
+    "hashtag": "#botanicaltattoo",
+    "count": 12
+  },
+  {
+    "hashtag": "#g\u00fctersloh",
+    "count": 12
+  },
+  {
+    "hashtag": "#paderborn",
+    "count": 13
+  },
+  {
+    "hashtag": "#pepax",
+    "count": 2
+  },
+  {
+    "hashtag": "#pepaxlance",
+    "count": 2
+  },
+  {
+    "hashtag": "#scarcover",
+    "count": 2
+  },
+  {
+    "hashtag": "#scarcoveruptattoo",
+    "count": 2
+  },
+  {
+    "hashtag": "#narbentattoo",
+    "count": 2
+  },
+  {
+    "hashtag": "#flower",
+    "count": 3
+  },
+  {
+    "hashtag": "#bye",
+    "count": 2
+  },
+  {
+    "hashtag": "#happysunday",
+    "count": 1
+  },
+  {
+    "hashtag": "#schienbeintattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#shintattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#emalla",
+    "count": 10
+  },
+  {
+    "hashtag": "#sunflower",
+    "count": 1
+  },
+  {
+    "hashtag": "#peonies",
+    "count": 2
+  },
+  {
+    "hashtag": "#leafs",
+    "count": 4
+  },
+  {
+    "hashtag": "#rose",
+    "count": 1
+  },
+  {
+    "hashtag": "#rosetattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#dahlia",
+    "count": 1
+  },
+  {
+    "hashtag": "#dahlien",
+    "count": 1
+  },
+  {
+    "hashtag": "#Bouquet",
+    "count": 4
+  },
+  {
+    "hashtag": "#emallacartridges",
+    "count": 2
+  },
+  {
+    "hashtag": "#newpost",
+    "count": 1
+  },
+  {
+    "hashtag": "#welcomeback",
+    "count": 1
+  },
+  {
+    "hashtag": "#neuestattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#leopard",
+    "count": 1
+  },
+  {
+    "hashtag": "#leopardtattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#armtattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#shouldertattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#peony",
+    "count": 2
+  },
+  {
+    "hashtag": "#peonytattoo",
+    "count": 2
+  },
+  {
+    "hashtag": "#leistentattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#h\u00fcftentattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#paparazzi",
+    "count": 1
+  },
+  {
+    "hashtag": "#nothingtopost",
+    "count": 1
+  },
+  {
+    "hashtag": "#hiptattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#h\u00fcfttattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#mohn",
+    "count": 1
+  },
+  {
+    "hashtag": "#mohnblume",
+    "count": 1
+  },
+  {
+    "hashtag": "#tattooforgirls",
+    "count": 1
+  },
+  {
+    "hashtag": "#spine",
+    "count": 1
+  },
+  {
+    "hashtag": "#r\u00fcckentattoo",
+    "count": 1
+  },
+  {
+    "hashtag": "#wirbels\u00e4ule",
+    "count": 1
+  },
+  {
+    "hashtag": "#minimalism",
+    "count": 1
+  }
+];

@@ -1,0 +1,24 @@
+{
+    "weekly_counts": [
+        {
+            "week": "W1",
+            "count": 3
+        },
+        {
+            "week": "W4",
+            "count": 10
+        },
+        {
+            "week": "W3",
+            "count": 6
+        },
+        {
+            "week": "W2",
+            "count": 4
+        },
+        {
+            "week": "W5",
+            "count": 1
+        }
+    ]
+}

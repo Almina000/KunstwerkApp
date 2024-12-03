@@ -1,0 +1,24 @@
+{
+    "monthly_counts": [
+        {
+            "month": "November",
+            "count": 13
+        },
+        {
+            "month": "December",
+            "count": 2
+        },
+        {
+            "month": "March",
+            "count": 1
+        },
+        {
+            "month": "October",
+            "count": 14
+        },
+        {
+            "month": "September",
+            "count": 6
+        }
+    ]
+}
