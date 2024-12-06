@@ -8,22 +8,21 @@ if (!shapeCounts) {
 const { triangles, circles, rectangles } = shapeCounts;
 console.log(`Dreiecke: ${triangles}, Kreise: ${circles}, Rechtecke: ${rectangles}`);
 
-const pixelColors = JSON.parse(localStorage.getItem("pixelColors"));
+// const pixelColors = JSON.parse(localStorage.getItem("pixelColors"));
 
-if (!pixelColors) {
-    console.error('Keine Pixel-Farben gefunden. Bitte analysiere die Bilder zuerst.');
-} else {
-    console.log('Pixel-Farben:', pixelColors);
-}
-
-// const profileName = process.argv[2]; // Erwartet den Profilnamen als CLI-Argument
-
-// if (!profileName) {
-//   console.error('Kein Profilname angegeben! Das Skript benötigt einen Profilnamen.');
-//   process.exit(1);
-// }else {
-//   console.log('Profilname:', profileName);
+// if (!pixelColors) {
+//     console.error('Keine Pixel-Farben gefunden. Bitte analysiere die Bilder zuerst.');
+// } else {
+//     console.log('Pixel-Farben:', pixelColors);
 // }
+
+// sketch.js
+const profileName = JSON.parse(localStorage.getItem("profileName"));
+// const profileName = document.getElementById('profileName').getAttribute('data-profile');
+console.log("Profilname von Flask:", profileName);  // Profilname in der Konsole ausgeben
+
+const dataName = JSON.parse(localStorage.getItem("dataName"));
+console.log("Dataname von Flask:", dataName);  // Profilname in der Konsole ausgeben
 
 //___________________________________________________________________________________________
 
@@ -32,7 +31,8 @@ const canvasHeight = 1080;
 
 const number = triangles + circles + rectangles;
 console.log(`gesamt: ${number}`);
-const num = 10;
+
+let num = 10;
 
 function preload() {
   customFont = loadFont('static/fonts/AbadiMT-ExtraLight.ttf');
@@ -53,31 +53,65 @@ function setup() {
   stroke(0);
   rect(rectX, rectY, rectWidth, rectHeight);
 
-  // Sortiere nach 'count' und nimm die obersten 10 Hashtags
-  let topHashtags = hashtagData
-    .sort((a, b) => b.count - a.count)
-    .slice(0, num);
+  let topHashtags = [];
 
+  if (profileName === "elbenwald") {
+    switch (dataName) {
+      case "Hashtag":
+        topHashtags = elbenwald_hashtagData;
+        break;
+      case "Months":
+        topHashtags = elbenwald_monthlyCounts;
+        break;
+      case "Weeks":
+        topHashtags = elbenwald_weeklyCounts;
+        break;
+      case "Pixel":
+        topHashtags = elbenwald_PixelData;
+        break;
+    }
+  }else if (profileName == "google"){
+    topHashtags = google_hashtagData
+  }else if (profileName == "kulturcafezett9"){
+    topHashtags = kulturcafezett9_hashtagData
+  }else if (profileName == "cinecittamultiplexkino"){
+    topHashtags = cinecittamultiplexkino_hashtagData
+  }
+  topHashtags = topHashtags
+    .sort((a, b) => b.count - a.count)  // Sortiere nach count in absteigender Reihenfolge
+    .slice(0, num);  // Schneide die obersten 'num' Elemente ab
   let totalTopCount = topHashtags.reduce((sum, hashtag) => sum + hashtag.count, 0);
 
+  // if (topHashtags.length < num){
+  //   num = topHashtags.length
+  // }
   // Farben erstellen für jeden Hashtag, jetzt noch random
   //let colors = [];
   //for (let i = 0; i < num; i++) {
     //colors.push(color(random(100, 255), random(100, 255), random(100, 255)));
   //}
-  let colors = [
-    "#1E90FF",  // Blau
-    "#FF4500",  // Rot-Orange
-    "#FFD700",  // Gelb
-    "#32CD32",  // Grün
-    "#8A2BE2",  // Lila
-    "#40E0D0",  // Türkis
-    "#FF6347",  // Tomatenrot
-    "#FF1493",  // Dunkles Pink
-    "#4682B4",  // Stahlblau
-    "#9370DB"   // Violett
-];
+  
+  
+  let colors = [];  // Initialisiere das Array colors
 
+  if (dataName == "Pixel") {
+    colors = topHashtags.map(hashtag => hashtag.hashtag);
+    console.log(colors);
+  } else {
+    colors = [
+      "#1E90FF",  // Blau
+      "#FF4500",  // Rot-Orange
+      "#FFD700",  // Gelb
+      "#32CD32",  // Grün
+      "#8A2BE2",  // Lila
+      "#40E0D0",  // Türkis
+      "#FF6347",  // Tomatenrot
+      "#FF1493",  // Dunkles Pink
+      "#4682B4",  // Stahlblau
+      "#9370DB"   // Violett
+    ];
+  }
+  
   // Zeichne die Legende unter dem Rechteck
   let legendX1 = rectX; // Linker Block
   let legendX2 = rectX + rectWidth / 2 + 20; // Rechter Block
@@ -91,28 +125,29 @@ function setup() {
   let rightCount = Math.floor(number / 2); // Anzahl der Hashtags rechts
   
   // Zeichne die ersten 5 Hashtags im linken Block
-  for (let index = 0; index < leftCount; index++) {
+  for (let index = 0; index < Math.min(leftCount, topHashtags.length); index++) {
     fill(colors[index]);
     noStroke();
-    //rect(legendX1, legendY + index * 30, 20, 20);
     ellipse(legendX1 + 10, legendY + index * 30 + 10, 20, 20); // Kreise statt Rechtecke
 
-    fill(0);
+    fill(0); // Textfarbe schwarz
+    textSize(16); // Schriftgröße anpassen, falls nötig
+    textFont(customFont); // Schriftart (stelle sicher, dass customFont geladen wird)
     text(topHashtags[index].hashtag, legendX1 + 30, legendY + index * 30 + 10);
-}
+  }
 
-// Rechter Block
-for (let index = 0; index < rightCount; index++) {
+  // Rechter Block
+  for (let index = 0; index < Math.min(rightCount, topHashtags.length - leftCount); index++) {
     let hashtagIndex = leftCount + index; // Index im gesamten Array
     fill(colors[hashtagIndex]);
     noStroke();
-    //rect(legendX2, legendY + index * 30, 20, 20);
     ellipse(legendX2 + 10, legendY + index * 30 + 10, 20, 20); // Kreise statt Rechtecke
 
-
-    fill(0);
+    fill(0); // Textfarbe schwarz
+    textSize(16); // Schriftgröße anpassen, falls nötig
+    textFont(customFont); // Schriftart (stelle sicher, dass customFont geladen wird)
     text(topHashtags[hashtagIndex].hashtag, legendX2 + 30, legendY + index * 30 + 10);
-}
+  }
 
   ///////////////////////////////////////////////////
   //TEST Fibonacci Raster
@@ -141,8 +176,9 @@ for (let index = 0; index < rightCount; index++) {
   ////////////////////////////////////////////////////////////////
 
   // Funktion aufrufen
+  
   let shapes = predictShape(num, triangles, circles, rectangles);
-  let surfaceAreas = calculateSurfaceArea(rectWidth, rectHeight, topHashtags,  totalTopCount);
+  let surfaceAreas = calculateSurfaceArea(rectWidth, rectHeight, topHashtags, totalTopCount);
   //drawPoints(rectX, rectY, rectWidth, rectHeight);
   console.log(`ShapeArray Kreis: ${shapes}`);
   drawCircleForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfaceAreas, shapes);

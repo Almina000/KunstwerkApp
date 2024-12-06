@@ -14,7 +14,16 @@
   </head>
   <body>
     <div id="profile-container" data-profile="{{ profile }}"></div>
+    <div id="data-container" data-algorithm="{{ data }}"></div>
+
+    <script src="{{ url_for('static', filename='js/' + profile + '_hashtags_counts.js') }}"></script>
+
+
     <!-- JS-Dateien laden -->
+    <script src="{{ url_for('static', filename='js/elbenwald_hashtags_counts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/elbenwald_pixel_counts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/elbenwald_monthly_counts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/elbenwald_weekly_counts.js') }}"></script>
     <script src="{{ url_for('static', filename='js/dataHashtags.js') }}"></script>
     <script src="{{ url_for('static', filename='js/predictShape.js') }}"></script>
     <script src="{{ url_for('static', filename='js/surfaceArea.js') }}"></script>

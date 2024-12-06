@@ -5,7 +5,7 @@ function calculateSurfaceArea(rectWidth, rectHeight, topHashtags,  totalTopCount
 
     topHashtags.forEach((tag, index) => {
         let percentTag = tag.count / totalTopCount; //% pro Tag
-        let surfaceTag = percentTag * surfaceTotal * 0.7; // A pro Tag
+        let surfaceTag = percentTag * surfaceTotal * 0.4; // A pro Tag
         surfaceAreas.push(surfaceTag);
       });
 

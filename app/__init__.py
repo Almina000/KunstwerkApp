@@ -4,6 +4,7 @@ import os
 import subprocess
 import threading
 
+
 app = Flask(__name__)
 CORS(app)
 #app.secret_key = '12345asdfgHHHr45JK!'  # Ersetze dies durch einen sicheren, zufälligen Schlüssel
@@ -24,27 +25,60 @@ def serve_json():
 def generate_images_json():
     profile_name = session.get('profile_name')
 
-    logging.info(f'Profilname erhalten init.py: {profile_name}')
-    
     if not profile_name:
-        logging.error('Profilname fehlt in der Session.')
+        print('Profilname fehlt in der Session.')
         return jsonify({'error': 'Profilname fehlt'}), 400
-    
+
     script_path = os.path.join(os.path.dirname(__file__), 'static/js/readImages.js')
-    logging.info(f'Script wird ausgeführt: {script_path}')
-    #subprocess.run(['node', script_path, profile_name])
+    print(f'Script wird ausgeführt: {script_path}')
 
-    result = subprocess.run(['node', script_path, profile_name], capture_output=True)
+    result = subprocess.run(['node', script_path, profile_name], capture_output=True, text=True)
 
-    # Log-Ausgabe für die Konsolenausgabe des Scripts
     if result.returncode == 0:
-        logging.info('Script readImages.js wurde erfolgreich ausgeführt.')
-        logging.info(f'Script-Ausgabe: {result.stdout.decode()}')
+        print('Script readImages.js wurde erfolgreich ausgeführt.')
+        print(f'Script-Ausgabe: {result.stdout}')
+        #return render_template('waitingPixels.html')
     else:
-        logging.error(f'Script readImages.js wurde mit einem Fehler beendet. Rückgabecode: {result.returncode}')
-        logging.error(f'Script-Fehlerausgabe: {result.stderr.decode()}')
+        print(f'Script readImages.js wurde mit einem Fehler beendet. Rückgabecode: {result.returncode}')
+        print(f'Script-Fehlerausgabe: {result.stderr}')
+        #return jsonify({'error': 'Fehler beim Ausführen von readImages.js', 'details': result.stderr}), 500
+    # return render_template('waitingPixels.html')
+    response = waiting_pixels()
+    return response
+
+   
+
+@app.route('/read-images-json', methods=['POST'])
+def read_images_json():
+    print('Hej I bims ich bin an der richtigen stelle')
+    form = request.form
+    profile = form.get('profile')
+
+    if not profile:
+        return jsonify({"error": "Profilname fehlt"}), 400
     
-    return jsonify({'message': 'images.json wurde erstellt!'})
+    # Speichere den Profilnamen in der Sitzung
+    session['profile_name'] = profile
+
+    def run_scraper(profile_name):
+        # Übergib den Profilnamen an scraperRun.py
+        script_path = os.path.join(os.path.dirname(__file__), 'readPixelsFromJson.py')
+        subprocess.run(['python', script_path, profile_name])
+        global scraper_status
+        scraper_status['finished'] = True
+
+    # Führe den Scraper in einem separaten Thread aus, um die HTTP-Anfrage nicht zu blockieren
+    thread = threading.Thread(target=run_scraper, args=(profile,))
+    thread.start()
+
+    response = choose_algorithm()
+
+    return response
+
+@app.route('/waiting-pixels')
+def waiting_pixels():
+    return render_template('waitingPixels.html')
+
 
 
 #######################################
@@ -101,11 +135,37 @@ def check_scraper_status():
 def artwork():
     #return render_template('artwork.html')
     profile_name = request.args.get('profile', 'default')
-    return render_template('artwork.html', profile=profile_name)
+    data_name = request.args.get('data', 'default')
+    return render_template('artwork.html', profile=profile_name, data=data_name)
 
 @app.route('/choose-algorithm')
 def choose_algorithm():
-    return render_template('chooseAlgorithm.html')
+    # Versuche, den Datennamen aus der URL zu holen
+    data_name = request.args.get('data')
+
+    # Wenn kein Datennamen in der URL vorhanden ist, versuche, ihn aus der Session zu holen
+    if not data_name:
+        data_name = session.get('data_name', 'default')
+
+    # Falls immer noch kein Datennamen vorhanden ist, setze ihn auf "default"
+    if not data_name:
+        data_name = 'default'
+
+    # Versuche, den Profilnamen aus der URL zu holen
+    profile_name = request.args.get('profile', 'default')
+    
+    # Speichere den Profilnamen und Datennamen in der Sitzung
+    session['data_name'] = data_name
+    session['profile_name'] = profile_name
+
+    print(f"Data Name in Flask: {data_name}")
+    print(f"Data Name: {data_name}, Profile Name: {profile_name}")
+
+    return render_template('chooseAlgorithm.html', profile=profile_name, data=data_name)
+
+   
+
+
 
 @app.route('/choose-profile')
 def choose_profile():
@@ -113,9 +173,22 @@ def choose_profile():
 
 @app.route('/choose-data')
 def choose_data():
-    #return render_template('chooseData.html')
-    profile_name = request.args.get('profile', 'default')
+    # Versuche, den Profilnamen aus der URL zu holen
+    profile_name = request.args.get('profile')
+
+    # Wenn kein Profilname in der URL vorhanden ist, versuche, ihn aus der Session zu holen
+    if not profile_name:
+        profile_name = session.get('profile_name', 'default')
+
+    # Falls immer noch kein Profilname vorhanden ist, setze ihn auf "default"
+    if not profile_name:
+        profile_name = 'default'
+
+    # Speichere den Profilnamen in der Sitzung
+    session['profile_name'] = profile_name
+
     return render_template('chooseData.html', profile=profile_name)
+
 
 @app.route('/delaunay/random')
 def delaunay_random():
@@ -135,7 +208,9 @@ def delaunay_auswahl():
 
 @app.route('/fibonacci')
 def fibonacci():
-    return render_template('fibonacci.html')
+    profile_name = session.get('profile_name', 'default')
+    data_name = session.get('data_name', 'default')  # Hole den Profilnamen aus der Session oder setze einen Standardwert
+    return render_template('fibonacci.html', profile=profile_name, data=data_name)
 
 @app.route('/voronoi')
 def voronoi():

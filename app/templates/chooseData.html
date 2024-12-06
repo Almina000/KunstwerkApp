@@ -24,16 +24,17 @@
     
     <!-- Buttons -->
     <div class="buttons">
-        <a href="{{ url_for('choose_algorithm') }}" class="button">Top Hashtags</a>
-        <a href="{{ url_for('choose_algorithm') }}" class="button">Top Months</a>
-        <a href="{{ url_for('choose_algorithm') }}" class="button">Top Weeks</a>
+        <a href="{{ url_for('choose_algorithm', data='Hashtag', profile=profile) }}" class="button">Hashtags</a>
+        <a href="{{ url_for('choose_algorithm', data='Months', profile=profile) }}" class="button">Months</a>
+        <a href="{{ url_for('choose_algorithm', data='Weeks', profile=profile) }}" class="button">Weeks</a>
+        <a href="{{ url_for('choose_algorithm', data='Pixel', profile=profile) }}" class="button">Pixel Color</a>
+        
         <!-- PixelColor Button -->
-        <a id="pixelColorButton" class="button" href="{{ url_for('choose_algorithm') }}">PixelColor</a> 
+        <!-- <a id="pixelColorButton" class="button">PixelColor</a>  -->
     </div>
 
     <!-- Skripte einbinden -->
-    <script src="{{ url_for('static', filename='js/readImages.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/readPixelsFromJson.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/readImages.js') }}"></script> -->
     <!-- <script>
         async function fetchAndGenerateImagesJson() {
             const response = await fetch('/generate-images-json');
@@ -45,37 +46,60 @@
         document.getElementById('pixelColorButton').addEventListener('click', fetchAndGenerateImagesJson);
     </script> -->
     <script>
-        async function fetchAndGenerateImagesJson() {
-            console.log("fetchAndGenerateImagesJson() wurde aufgerufen."); // Log-Ausgabe beim Aufruf der Funktion
+        // async function fetchAndGenerateImagesJson() {
+        //     console.log("fetchAndGenerateImagesJson() wurde aufgerufen.");
+
+        //     try {
+        //         console.log("Starte Fetch-Anfrage an /generate-images-json.");
+        //         const response = await fetch("{{ url_for('generate_images_json') }}");
+
+        //         console.log("Antwort vom Server erhalten.");
+
+        //         if (!response.ok) {
+        //             console.error("Fehler: Die Antwort des Servers war nicht erfolgreich.");
+        //             return;
+        //         }
+
+        //         const html = await response.text(); // HTML-Inhalt abrufen
+        //         //console.log("HTML-Inhalt aus der Antwort:", html);
+
+        //         // Optional: Füge den HTML-Inhalt in den DOM ein
+        //         document.body.innerHTML = html;
+        //     } catch (error) {
+        //         console.error("Ein Fehler ist aufgetreten in fetchAndGenerateImagesJson:", error);
+        //     }       
+        // }
+
+        // // async function fetchAndGenerateImagesJson() {
+        // //     console.log("fetchAndGenerateImagesJson() wurde aufgerufen."); // Log-Ausgabe beim Aufruf der Funktion
     
-            try {
-                console.log("Starte Fetch-Anfrage an /generate-images-json."); // Log-Ausgabe vor der Fetch-Anfrage
-                const response = await fetch('/generate-images-json');
-                console.log("Antwort vom Server erhalten."); // Log-Ausgabe nach der Antwort vom Server
+        // //     try {
+        // //         console.error("Starte Fetch-Anfrage an /generate-images-json."); // Log-Ausgabe vor der Fetch-Anfrage
+        // //         const response = await fetch("{{ url_for('generate_images_json') }}");
+               
+        // //         console.log("Antwort vom Server erhalten."); // Log-Ausgabe nach der Antwort vom Server
     
-                if (!response.ok) {
-                    console.error("Fehler: Die Antwort des Servers war nicht erfolgreich."); // Fehlerbehandlung für unzureichende Antwort
-                    return;
-                }
+        // //         if (!response.ok) {
+        // //             console.error("Fehler: Die Antwort des Servers war nicht erfolgreich."); // Fehlerbehandlung für unzureichende Antwort
+        // //             return;
+        // //         }
     
-                const data = await response.json();
-                console.log("Daten aus der JSON-Antwort:", data); // Log-Ausgabe der erhaltenen Daten
+        // //         const data = await response.json();
+        // //         console.log("Daten aus der JSON-Antwort:", data); // Log-Ausgabe der erhaltenen Daten
     
-                console.log(data.message); // Bestätigung der Erstellung
+        // //         console.log(data.message); // Bestätigung der Erstellung
     
-                console.log("Starte die Analyse der Farben."); // Log-Ausgabe vor dem Start der Farb-Analyse
-                await analyzeColors();
-                console.log("Analyse der Farben abgeschlossen."); // Log-Ausgabe nach Abschluss der Farb-Analyse
-    
-            } catch (error) {
-                console.error("Ein Fehler ist aufgetreten bei fetchAndGenerateImagesJson:", error); // Fehlerbehandlung für try-catch
-            }
-        }
-    
-        document.getElementById('pixelColorButton').addEventListener('click', () => {
-            console.log("Pixel-Farben-Button wurde geklickt."); // Log-Ausgabe beim Klick auf den Button
-            fetchAndGenerateImagesJson();
-        });
+        // //     } catch (error) {
+        // //         console.error("Ein Fehler ist aufgetreten bei readPixels in fetchAndGenerateImagesJson:", error); // Fehlerbehandlung für try-catch
+        // //     }
+
+          
+        // //}
+        
+        // console.log("Ich stehe über dem getElementById.");
+        // document.getElementById('pixelColorButton').addEventListener('click', 
+        //     fetchAndGenerateImagesJson
+        // );
     </script>
     
 </body>

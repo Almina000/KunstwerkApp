@@ -4,7 +4,7 @@ import time
 def main(profile_name):
     # Beispiel für einen Scraper-Vorgang (simuliert durch sleep)
     print(f"Starte das Scraping für das Profil: {profile_name}")
-    time.sleep(30)  # Simuliert die Dauer des Scrapers
+    time.sleep(10)  # Simuliert die Dauer des Scrapers
     print("Scraping abgeschlossen")
 
 if __name__ == "__main__":

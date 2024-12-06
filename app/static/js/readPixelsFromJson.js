@@ -1,92 +1,117 @@
+const fs = require('fs');
+const path = require('path');
+const sharp = require('sharp');
 
-// Hauptfunktion für die Farbanalyse
-async function analyzeColors() {
-    const profileName = process.argv[2]; // Erwartet den Profilnamen als CLI-Argument
+// const profileName = process.argv[2]; // Erwartet den Profilnamen als CLI-Argument
+// console.log('ProfilName readPixels', profileName);
+// console.log('fs Path:', path);
+const profileName = "elbenwald";
 
-    console.log('ProfilName readPixels', profileName);
-
-    if (!profileName) {
-      console.error('Kein Profilname angegeben! Das Skript benötigt einen Profilnamen.');
-      process.exit(1);
-    }
-
-    console.log("analyzeColors() gestartet.");
-    const jsonFile = `/static/js/${profileName}_images.json`; // Pfad zur JSON-Datei mit Bildpfaden
-    //const outputElement = document.getElementById('output');
-
-    // Lade die JSON-Datei mit Bildpfaden
-    console.log("Vor dem Laden der Datei");
-    const response = await fetch(jsonFile);
-    console.log("Nach dem Laden der Datei");
-
-    if (!response.ok) {
-        //outputElement.textContent = 'Fehler: JSON-Datei konnte nicht geladen werden.';
-        console.log("Fehler: JSON-Datei konnte nicht geladen werden.");
-        return;
-    }
-
-    const files = await response.json(); // Bildliste aus JSON-Datei
-    const colorData = {};
-    console.log('clolorFiles:', files);
-
-
-    for (const file of files) {
-        console.log('clolorFile in for:', file);
-        console.log('hallooooo:');
-        const img = new Image();
-        img.src = file; // Lade das Bild
-        await new Promise(resolve => {
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = 200;
-                canvas.height = 200;
-                ctx.drawImage(img, 0, 0, 200, 200);
-
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-                const colors = {};
-                for (let i = 0; i < imageData.length; i += 4) {
-                    const r = imageData[i];
-                    const g = imageData[i + 1];
-                    const b = imageData[i + 2];
-                    const hex = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
-                    colors[hex] = (colors[hex] || 0) + 1;
-                }
-                colorData[file] = mergeSimilarColors(colors);
-                console.log('Aktuelle Farbanalyse für Datei:', file, colorData[file]);
-                resolve();
-            };
-        });
-    }
-
-    // const pixelData = [];
-    // for (const color in colorData) {
-    //     pixelData.push({ Color: color, count: colorData[color] });
-    // }
-
-    // // Erstelle den JavaScript-Code
-    // const jsContent = `const pixelData = ${JSON.stringify(pixelData, null, 2)};`;
-
-    // // Ausgabe des Codes in der Konsole (zum Kopieren)
-    // console.log(jsContent);
-
-    try {
-        // Speichern der Daten im localStorage
-        localStorage.setItem("pixelColors", JSON.stringify(colorData));
-        const jsonOutput = JSON.stringify(colorData, null, 2);
-        console.log("Pixel-Farben gespeichert:", colorData);
-        console.log('keine lust mehr');
-        console.log('Pixel-Farben:', jsonOutput);
-    } catch (error) {
-        console.error("Fehler beim Ausführen der letzten Logs:", error);
-    }
-    
+if (!profileName) {
+    console.error('Kein Profilname angegeben! Das Skript benötigt einen Profilnamen.');
+    process.exit(1);
+}
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Hilfsfunktion: Farben zusammenfassen
+console.log("analyzeColors() gestartet.");
+const jsonFile = path.join(__dirname, `${profileName}_images.json`);
+
+console.log("Vor dem Laden der Datei");
+let files;
+try {
+    const fileData = fs.readFileSync(jsonFile, 'utf8');
+    files = JSON.parse(fileData); // Bildliste aus JSON-Datei
+    console.log('Dateien aus JSON geladen:', files);
+} catch (error) {
+    console.error("Fehler: JSON-Datei konnte nicht geladen werden.", error);
+    process.exit(1);
+}
+
+const colorData = {};
+
+async function processImage(filePath) {
+    try {
+        const imageBuffer = fs.readFileSync(filePath);
+        console.log('Bild geladen, Größe:', imageBuffer.length);
+        console.log('Imagebuffer::', imageBuffer);
+
+        if (imageBuffer.length === 0) {
+            console.error('Das Bild ist leer oder konnte nicht geladen werden.');
+            return;
+        } else {
+            console.log('Bild erfolgreich geladen.');
+        }
+
+        // Verzeichnis für bearbeitete Bilder sicherstellen
+        const processedImagesDir = path.join(__dirname, 'processed_images');
+        if (!fs.existsSync(processedImagesDir)) {
+            fs.mkdirSync(processedImagesDir);
+        }
+
+        // Verarbeite und speichere das Bild
+        const outputFilePath = path.join(processedImagesDir, path.basename(filePath));
+        
+        // Verarbeite das Bild mit sharp und speichere es, während der Code auf das Ergebnis wartet
+        await sharp(imageBuffer)
+            .resize(200, 200)
+            .toFile(outputFilePath);
+        
+        console.log('Bild gespeichert:', outputFilePath);
+
+        await wait(10000); // Wartet 10 Sekunden (10000 Millisekunden)
+    
+        // Optionale Analyse des bearbeiteten Bildes, falls gewünscht
+        const { data, info } = await sharp(outputFilePath)
+            .raw()
+            .toBuffer();
+
+        console.log("Buffer verarbeitet:", outputFilePath);
+        console.log("Data:", data);
+        console.log("Bildinfo:", info);  // Gibt Aufschluss über die Bilddetails
+        console.log("Data length:", data.length);
+
+        if (data.length === 0) {
+            console.error("Data array is empty!");
+        }
+
+        const colors = {};
+        for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const hex = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+            colors[hex] = (colors[hex] || 0) + 1;
+        }
+
+        colorData[filePath] = mergeSimilarColors(colors);
+        console.log('Aktuelle Farbanalyse für Datei:', filePath, colorData[filePath]);
+    } catch (err) {
+        console.error('Fehler beim Verarbeiten der Datei:', filePath, err);
+    }
+}
+
+
+async function processImages(files) {
+    const promises = files.map(file => {
+        const shortenedPath = path.resolve(__dirname, '..', '..');
+        const filePath = path.join(shortenedPath, file);
+        console.log('Verarbeite Datei:', filePath);
+        return processImage(filePath);
+    });
+
+    await Promise.all(promises);
+    saveColorDataToFile(colorData, profileName);
+    console.log('!!!!!!!color Daten:', colorData);
+    console.log("Pixel-Farben erfolgreich gespeichert.");
+}
+
+processImages(files).catch(console.error);
+
 function mergeSimilarColors(colors) {
     const mergedColors = {};
-    const threshold = 30; // Unterschiedsschwelle
+    const threshold = 30;
 
     for (const color in colors) {
         const [r1, g1, b1] = hexToRgb(color);
@@ -94,7 +119,11 @@ function mergeSimilarColors(colors) {
 
         for (const mergedColor in mergedColors) {
             const [r2, g2, b2] = hexToRgb(mergedColor);
-            if (Math.abs(r1 - r2) < threshold && Math.abs(g1 - g2) < threshold && Math.abs(b1 - b2) < threshold) {
+            if (
+                Math.abs(r1 - r2) < threshold &&
+                Math.abs(g1 - g2) < threshold &&
+                Math.abs(b1 - b2) < threshold
+            ) {
                 mergedColors[mergedColor] += colors[color];
                 found = true;
                 break;
@@ -109,7 +138,6 @@ function mergeSimilarColors(colors) {
     return mergedColors;
 }
 
-// Hilfsfunktion: Hex-Farbcode in RGB umwandeln
 function hexToRgb(hex) {
     const bigint = parseInt(hex.slice(1), 16);
     const r = (bigint >> 16) & 255;
@@ -118,6 +146,12 @@ function hexToRgb(hex) {
     return [r, g, b];
 }
 
-// Event-Listener für den Button
-// document.getElementById('analyzeButton').addEventListener('click', analyzeColors);
-//document.getElementById('pixelColorButton').addEventListener('click', analyzeColors);
+function saveColorDataToFile(colorData, profileName) {
+    const filePath = path.join(__dirname, `${profileName}_color_data.json`);
+    try {
+        fs.writeFileSync(filePath, JSON.stringify(colorData, null, 2), 'utf8');
+        console.log(`Daten erfolgreich in ${filePath} gespeichert.`);
+    } catch (err) {
+        console.error('Fehler beim Speichern der JSON-Datei:', err);
+    }
+}

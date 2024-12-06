@@ -22,9 +22,13 @@
       }
     </script>
   </head>
-  <body onload="checkScraperStatus()"> <!-- Statusprüfung bei Seitenaufruf starten -->
+  <body> 
     <div id="startPage">
       <h2>Wählen Sie die Anzahl der Formen</h2>
+
+      <div id="profileName" data-profile="{{ profile }}"></div>
+      <div id="dataName" data-algorithm="{{ data }}"></div>
+
       <label for="triangles">Dreiecke:</label>
       <input type="range" id="triangles" name="triangles" min="0" max="10" value="5">
       <span id="triangleValue">5</span><br>
@@ -37,13 +41,25 @@
       <input type="range" id="rectangles" name="rectangles" min="0" max="10" value="5">
       <span id="rectangleValue">5</span><br>
 
-      <p id="warning" style="color: red; display: none;">Die Gesamtanzahl der Formen darf maximal 10 sein.</p>
+      <p id="warning" style="color: red; display: none;">Die Gesamtanzahl der Formen darf maximal <span id="maxShape"></span> sein.</p>
       
       <!-- Weiter-Button (initial aktiviert) -->
       <button id="startButton" onclick="startArt()">Weiter</button>
     </div>
-
+    <script src="{{ url_for('static', filename='js/elbenwald_hashtags_counts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/elbenwald_pixel_counts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/elbenwald_monthly_counts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/elbenwald_weekly_counts.js') }}"></script>
     <script>
+      const profileName = document.getElementById('profileName').getAttribute('data-profile');
+      localStorage.setItem('profileName', JSON.stringify(profileName)); 
+      console.log("Profilname von Flask:", profileName); 
+
+      const dataName = document.getElementById('dataName').getAttribute('data-algorithm');
+      localStorage.setItem('dataName', JSON.stringify(dataName)); 
+      console.log("Dataname von Flask in fibopnaxxi:", dataName); 
+      
+      // Profilname in der Konsole ausgeben
       // Aktualisiere Slider-Werte und überprüfe die Gesamtanzahl
       function checkTotal() {
         const triangles = parseInt(document.getElementById("triangles").value);
@@ -51,7 +67,33 @@
         const rectangles = parseInt(document.getElementById("rectangles").value);
         const total = triangles + circles + rectangles;
 
-        if (total > 10) {
+        if (profileName === "elbenwald") {
+          switch (dataName) {
+            case "Hashtag":
+              topHashtags = elbenwald_hashtagData;
+              break;
+            case "Months":
+              topHashtags = elbenwald_monthlyCounts;
+              break;
+            case "Weeks":
+              topHashtags = elbenwald_weeklyCounts;
+              break;
+            case "Pixel":
+              topHashtags = elbenwald_PixelData;
+              break;
+          }
+        }else if (profileName == "google"){
+          topHashtags = google_hashtagData
+        }else if (profileName == "kulturcafezett9"){
+          topHashtags = kulturcafezett9_hashtagData
+        }else if (profileName == "cinecittamultiplexkino"){
+          topHashtags = cinecittamultiplexkino_hashtagData
+        }
+
+        let maxShape = topHashtags.length;
+        
+        document.getElementById("maxShape").textContent = maxShape;
+        if (total > maxShape) {
           document.getElementById("warning").style.display = "block";
         } else {
           document.getElementById("warning").style.display = "none";

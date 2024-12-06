@@ -145,7 +145,7 @@ def scroll_page(scroll_count):
 
 
 # Variable für die Anzahl der Scrollvorgänge
-initial_scroll_count = 3 # >3
+initial_scroll_count = 1 # >3
 additional_scroll_count = 0 #> 2
 repeat_count = 0  # Anzahl der Wiederholungen des Scrollen-Daten-Auslesen-Zyklus --> 5
 
@@ -301,21 +301,39 @@ output_base_path = os.path.join(base_path, 'app', 'static', 'js')
 # Sicherstellen, dass der Ordner existiert
 os.makedirs(output_base_path, exist_ok=True)
 
-# Monatsdaten speichern
-monthly_output_path = os.path.join(output_base_path, f"{profilename}_monthly_counts.json")
+# # Monatsdaten speichern
+# monthly_output_path = os.path.join(output_base_path, f"{profilename}_monthly_counts.json")
+# with open(monthly_output_path, 'w', encoding='utf-8') as f:
+#     json.dump({"monthly_counts": [{"month": month, "count": count} for month, count in month_counts.items()]}, f,
+#               ensure_ascii=False, indent=4)
+
+# print(f"Daten für Monate erfolgreich in '{monthly_output_path}' gespeichert!")
+
+# # Wochendaten speichern
+# weekly_output_path = os.path.join(output_base_path, f"{profilename}_weekly_counts.json")
+# with open(weekly_output_path, 'w', encoding='utf-8') as f:
+#     json.dump({"weekly_counts": [{"week": week, "count": count} for week, count in week_counts.items()]}, f,
+#               ensure_ascii=False, indent=4)
+
+# print(f"Daten für Wochen erfolgreich in '{weekly_output_path}' gespeichert!")
+# Monatsdaten im JavaScript-Format speichern
+monthly_output_path = os.path.join(output_base_path, f"{profilename}_monthly_counts.js")
 with open(monthly_output_path, 'w', encoding='utf-8') as f:
-    json.dump({"monthly_counts": [{"month": month, "count": count} for month, count in month_counts.items()]}, f,
-              ensure_ascii=False, indent=4)
+    f.write(f"const {profilename}_monthlyCounts = ")
+    f.write(json.dumps({f"monthly_counts": [{"month": month, "count": count} for month, count in month_counts.items()]}, ensure_ascii=False, indent=4))
+    f.write(";")
 
 print(f"Daten für Monate erfolgreich in '{monthly_output_path}' gespeichert!")
 
-# Wochendaten speichern
-weekly_output_path = os.path.join(output_base_path, f"{profilename}_weekly_counts.json")
+# Wochendaten im JavaScript-Format speichern
+weekly_output_path = os.path.join(output_base_path, f"{profilename}_weekly_counts.js")
 with open(weekly_output_path, 'w', encoding='utf-8') as f:
-    json.dump({"weekly_counts": [{"week": week, "count": count} for week, count in week_counts.items()]}, f,
-              ensure_ascii=False, indent=4)
+    f.write(f"const {profilename}_weeklyCounts = ")
+    f.write(json.dumps({"weekly_counts": [{"week": week, "count": count} for week, count in week_counts.items()]}, ensure_ascii=False, indent=4))
+    f.write(";")
 
 print(f"Daten für Wochen erfolgreich in '{weekly_output_path}' gespeichert!")
+
 ###########################################################################################################################################
 # Transform Hashtag Data:
 
@@ -350,13 +368,18 @@ hashtag_data = [{"hashtag": tag, "count": count} for tag, count in hashtag_count
 base_path = os.path.join(os.getcwd(), 'app', 'static', 'js')
 # Sicherstellen, dass der Ordner existiert
 os.makedirs(base_path, exist_ok=True)
-hashtag_output_path = os.path.join(base_path, f"{profilename}_hashtags_counts.json")
-# Daten in `data.js` speichern
+# hashtag_output_path = os.path.join(base_path, f"{profilename}_hashtags_counts.json")
+# # Daten in `data.js` speichern
+# with open(hashtag_output_path, "w", encoding="utf-8") as js_file:
+#     js_file.write("const hashtagData = ")
+#     js_file.write(json.dumps(hashtag_data, indent=2))
+#     js_file.write(";")
+
+# print(f"{profilename}_hashtags_counts.json wurde erfolgreich erstellt und die Hashtag-Daten wurden gespeichert!")
+hashtag_output_path = os.path.join(base_path, f"{profilename}_hashtags_counts.js")
 with open(hashtag_output_path, "w", encoding="utf-8") as js_file:
-    js_file.write("const hashtagData = ")
+    js_file.write(f"const {profilename}_hashtagData = ")
     js_file.write(json.dumps(hashtag_data, indent=2))
     js_file.write(";")
 
-print(f"{profilename}_hashtags_counts.json wurde erfolgreich erstellt und die Hashtag-Daten wurden gespeichert!")
-
-
+print(f"{profilename}_hashtags_counts.js wurde erfolgreich erstellt und die Hashtag-Daten wurden gespeichert!")

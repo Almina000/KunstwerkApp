@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testseite</title>
+</head>
+<body>
+    <button id="callReadImages">Daten abrufen</button>
+    <script>
+        console.log("halooooooooooooooooooooooooooo");
+
+        document.getElementById("callReadImages").addEventListener("click", function() {
+            console.log("Button wurde geklickt");
+
+            // Sende eine POST-Anfrage an die Flask-Route
+            fetch("/read-images-json", {
+                method: "POST",
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Daten erfolgreich abgerufen");
+                    return response.text(); // Oder response.json(), wenn die Antwort JSON ist
+                } else {
+                    console.error("Fehler beim Abrufen der Daten. Status:", response.status);
+                    return response.text().then(text => console.error("Fehlerdetails:", text));
+                }
+            })
+            .then(data => {
+                console.log("Antwort:", data);
+            })
+            .catch(error => {
+                console.error("Fehler bei der Anfrage:", error);
+            });
+        });
+    </script>
+</body>
+</html>

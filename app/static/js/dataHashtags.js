@@ -1,4 +1,4 @@
-const hashtagData = [
+const google_hashtagData = [
   {
     "hashtag": "#Pixel9",
     "count": 15
