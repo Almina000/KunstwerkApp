@@ -7,17 +7,119 @@
 
     <!-- CSS laden -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleArt.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleAuswahl.css') }}">
 
     <!-- P5-Libraries laden -->
     <script src="{{ url_for('static', filename='js/libraries/p5.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/libraries/p5.sound.min.js') }}"></script>
+
+    <script>
+      window.onload = function() {
+        // Werte aus dem Local Storage laden, wenn sie vorhanden sind
+        const storedShapeCounts = JSON.parse(localStorage.getItem("shapeCounts"));
+        const storedSize = localStorage.getItem("size");
+        const storedFilter = localStorage.getItem("filter") === "true";
+
+        // Wenn gespeicherte Werte vorhanden sind, setzen
+        if (storedShapeCounts) {
+          document.getElementById("triangles").value = storedShapeCounts.triangles;
+          document.getElementById("circles").value = storedShapeCounts.circles;
+          document.getElementById("rectangles").value = storedShapeCounts.rectangles;
+        }
+        if (storedSize !== null) {
+          document.getElementById("sizeSlider").value = storedSize;
+        }
+        if (storedFilter !== null) {
+          document.getElementById("filterCheckbox").checked = storedFilter;
+        }
+
+        // Anzeige aktualisieren
+        document.getElementById("triangleValue").textContent = document.getElementById("triangles").value;
+        document.getElementById("circleValue").textContent = document.getElementById("circles").value;
+        document.getElementById("rectangleValue").textContent = document.getElementById("rectangles").value;
+        document.getElementById("sizeValue").textContent = document.getElementById("sizeSlider").value;
+      };
+
+      function startArt() {
+        const triangles = parseInt(document.getElementById("triangles").value);
+        const circles = parseInt(document.getElementById("circles").value);
+        const rectangles = parseInt(document.getElementById("rectangles").value);
+        const total = triangles + circles + rectangles;
+        const filter = document.getElementById("filterCheckbox").checked;
+        localStorage.setItem("filter", filter);
+        const size = parseFloat(document.getElementById("sizeSlider").value);
+        localStorage.setItem("size", size);
+
+        let topHashtags = [];
+        if (profileName === "elbenwald") {
+            switch (dataName) {
+                case "Hashtag":
+                    topHashtags = elbenwald_hashtagData;
+                    break;
+                case "Months":
+                    topHashtags = elbenwald_monthlyCounts;
+                    break;
+                case "Weeks":
+                    topHashtags = elbenwald_weeklyCounts;
+                    break;
+                case "Pixel":
+                    topHashtags = elbenwald_PixelData;
+                    break;
+            }
+        } else if (profileName === "google") {
+            topHashtags = google_hashtagData;
+        } else if (profileName === "kulturcafezett9") {
+            topHashtags = kulturcafezett9_hashtagData;
+        } else if (profileName === "cinecittamultiplexkino") {
+            topHashtags = cinecittamultiplexkino_hashtagData;
+        }
+
+        const maxShape = topHashtags.length;
+        console.log("Maximale Anzahl der Formen (maxShape):", maxShape);
+
+        document.getElementById("maxShape").textContent = maxShape;
+        if (total > maxShape) {
+          document.getElementById("warning").style.display = "block";
+        } else {
+          document.getElementById("warning").style.display = "none";
+          window.location.href = "{{ url_for('artwork') }}";
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="profile-container" data-profile="{{ profile }}"></div>
     <div id="data-container" data-algorithm="{{ data }}"></div>
 
-    <script src="{{ url_for('static', filename='js/' + profile + '_hashtags_counts.js') }}"></script>
+    <div id="menu">
+      <h2>Einstellungen</h2>
 
+      <label for="triangles">Dreiecke:</label>
+      <input type="range" id="triangles" name="triangles" min="0" max="10" value="5">
+      <span id="triangleValue">5</span><br>
+
+      <label for="circles">Kreise:</label>
+      <input type="range" id="circles" name="circles" min="0" max="10" value="5">
+      <span id="circleValue">5</span><br>
+
+      <label for="rectangles">Rechtecke:</label>
+      <input type="range" id="rectangles" name="rectangles" min="0" max="10" value="5">
+      <span id="rectangleValue">5</span><br>
+
+      <label for="filterCheckbox" class="filter-label">
+        Filter für Kreise aktivieren:
+        <input type="checkbox" id="filterCheckbox">
+      </label>
+
+      <label for="sizeSlider">Größe:</label>
+      <input type="range" id="sizeSlider" name="sizeSlider" min="0" max="1" step="0.01" value="0.5">
+      <span id="sizeValue">0.5</span><br>
+
+      <!-- <p id="warning" style="color: red; display: none;">Die Gesamtanzahl der Formen darf maximal 10 sein.</p> -->
+      <p id="warning" style="color: red; display: none;">Die Gesamtanzahl der Formen darf maximal <span id="maxShape"></span> sein.</p>
+
+      <button id="startButton" onclick="startArt()">Weiter</button>
+    </div>
 
     <!-- JS-Dateien laden -->
     <script src="{{ url_for('static', filename='js/elbenwald_hashtags_counts.js') }}"></script>
@@ -31,5 +133,34 @@
     <script src="{{ url_for('static', filename='js/triangletest.js') }}"></script>
     <script src="{{ url_for('static', filename='js/rectangleTest.js') }}"></script>
     <script src="{{ url_for('static', filename='js/sketch.js') }}"></script>
+
+    <script>
+      // Aktualisieren der Anzeige für Slider und Speichern in localStorage
+      document.getElementById("triangles").addEventListener("input", function() {
+        document.getElementById("triangleValue").textContent = this.value;
+        const shapeCounts = JSON.parse(localStorage.getItem("shapeCounts")) || {};
+        shapeCounts.triangles = parseInt(this.value);
+        localStorage.setItem("shapeCounts", JSON.stringify(shapeCounts));
+      });
+
+      document.getElementById("circles").addEventListener("input", function() {
+        document.getElementById("circleValue").textContent = this.value;
+        const shapeCounts = JSON.parse(localStorage.getItem("shapeCounts")) || {};
+        shapeCounts.circles = parseInt(this.value);
+        localStorage.setItem("shapeCounts", JSON.stringify(shapeCounts));
+      });
+
+      document.getElementById("rectangles").addEventListener("input", function() {
+        document.getElementById("rectangleValue").textContent = this.value;
+        const shapeCounts = JSON.parse(localStorage.getItem("shapeCounts")) || {};
+        shapeCounts.rectangles = parseInt(this.value);
+        localStorage.setItem("shapeCounts", JSON.stringify(shapeCounts));
+      });
+
+      document.getElementById("sizeSlider").addEventListener("input", function() {
+        document.getElementById("sizeValue").textContent = this.value;
+        localStorage.setItem("size", this.value);
+      });
+    </script>
   </body>
 </html>

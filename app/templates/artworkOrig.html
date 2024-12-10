@@ -3,35 +3,33 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathArt</title>
 
-    <title>Sketch</title>
+    <!-- CSS laden -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleArt.css') }}">
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleAuswahl.css') }}">
-    <style>
-      .canvas-container {
-        margin-top: 50px; /* Beispielwert, ändere ihn nach Bedarf */
-      }
-    </style>
-    <!-- Libraries -->
+    <!-- P5-Libraries laden -->
     <script src="{{ url_for('static', filename='js/libraries/p5.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/libraries/p5.sound.min.js') }}"></script>
-    <script src="https://d3js.org/d3-delaunay.v6.min.js"></script>
   </head>
-
   <body>
-    <div class="canvas-container">
-      <!-- Der P5.js Canvas wird hier generiert -->
-    </div>
     <div id="profile-container" data-profile="{{ profile }}"></div>
     <div id="data-container" data-algorithm="{{ data }}"></div>
-    <!-- JavaScript Files -->
+
+    <script src="{{ url_for('static', filename='js/' + profile + '_hashtags_counts.js') }}"></script>
+
+
+    <!-- JS-Dateien laden -->
     <script src="{{ url_for('static', filename='js/elbenwald_hashtags_counts.js') }}"></script>
     <script src="{{ url_for('static', filename='js/elbenwald_pixel_counts.js') }}"></script>
     <script src="{{ url_for('static', filename='js/elbenwald_monthly_counts.js') }}"></script>
     <script src="{{ url_for('static', filename='js/elbenwald_weekly_counts.js') }}"></script>
     <script src="{{ url_for('static', filename='js/dataHashtags.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/delaunaySketchHaeufigkeit.js') }}"></script>
-    
+    <script src="{{ url_for('static', filename='js/predictShape.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/surfaceArea.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/circle.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/triangletest.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/rectangleTest.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/sketch.js') }}"></script>
   </body>
 </html>

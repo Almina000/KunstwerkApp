@@ -44,6 +44,41 @@ body, html {
   text-align: center;
 }
 
+/* Layout für das Hauptcontent */
+#content {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  height: 100vh;
+}
+
+/* Linke Spalte: Menü */
+#menu {
+  position: fixed;
+  top: 70px; /* Abstand zum Button */
+  left: 70px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+/* Rechte Spalte: Kunstwerk */
+#artwork {
+  margin-top: 100px; /* Abstand, damit das Menü nicht das Artwork überlappt */
+  flex-grow: 1;
+  width: 80%;
+  max-width: 800px;
+  height: 400px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 h2 {
   font-size: 2rem;
   color: #333;
@@ -136,6 +171,39 @@ input[type="range"]:active::-webkit-slider-thumb {
   background: #5c2388;
 }
 
+/* Entfernt das Standard-Checkbox-Design */
+input[type="checkbox"] {
+  appearance: none; /* Verhindert die standardmäßige Browseranzeige */
+  width: 20px; /* Breite der Checkbox */
+  height: 20px; /* Höhe der Checkbox */
+  border: 2px solid #333; /* Rahmenfarbe */
+  border-radius: 4px; /* Abgerundete Ecken */
+  cursor: pointer; /* Zeigt den Mauszeiger als Zeiger */
+  position: relative; /* Ermöglicht das Hinzufügen eines Pseudo-Elements */
+  transition: background-color 0.3s, border-color 0.3s; /* Sanfte Übergänge */
+}
+
+/* Stil der Checkbox, wenn sie gecheckt ist */
+input[type="checkbox"]:checked {
+  background-color: #9b4dca; /* Hintergrundfarbe, wenn gecheckt */
+  border-color: #9b4dca; /* Rahmenfarbe, wenn gecheckt */
+}
+
+/* Hinzufügen eines Häkchens für die Checkbox, wenn sie gecheckt ist */
+input[type="checkbox"]:checked::before {
+  content: '✓'; /* Häkchenzeichen */
+  color: white; /* Farbe des Häkchens */
+  position: absolute;
+  top: -0.01px; /* Zentrierung vertikal */
+  left: 1px; /* Zentrierung horizontal */
+  width: 16px; /* Breite des Häkchens */
+  height: 16px; /* Höhe des Häkchens */
+  font-size: 16px; /* Schriftgröße des Häkchens */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Anzeige der aktuellen Werte für Dreiecke, Kreise, Rechtecke */
 #triangleValue, #circleValue, #rectangleValue {
   display: inline-block;
@@ -143,4 +211,20 @@ input[type="range"]:active::-webkit-slider-thumb {
   margin-left: 10px;
   color: #333;
 }
+
+.hidden {
+  display: none;
+}
+
+.filter-label {
+  display: flex;
+  align-items: center; /* Vertikale Ausrichtung */
+  gap: 20px; /* Abstand zwischen Label und Checkbox */
+  margin-top: 10px; /* Vertikaler Abstand oben und unten */
+}
+#filterCheckbox {
+  margin-top: 20px; /* Abstand oben */
+  margin-bottom: 20px; /* Abstand unten */
+}
+
 

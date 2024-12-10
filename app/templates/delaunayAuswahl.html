@@ -6,8 +6,59 @@
     <title>Geometrie-Tools</title>
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styleStart.css') }}">
+    <style>
+        .color-palette-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Abstand zwischen den Reihen */
+            justify-content: center;
+            margin: 30px 0;
+        }
+        .color-palette-row {
+            display: flex;
+            justify-content: space-between;
+        }
+        .color-palette {
+            display: flex;
+            border: 2px solid #b8b3bb; /* Pastell-Lila */
+            cursor: pointer;
+            padding: 5px;
+            flex-wrap: wrap;
+            border-radius: 10px;
+            transition: border-color 0.3s ease;
+        }
+        .color-palette.selected {
+            border-color: #933cc8; /* Kräftiges Lila */
+        }
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            margin: 2px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .color-palette:hover {
+            border-color: #9b4dca; /* Kräftiges Lila */
+        }
+        .options-container {
+            margin-top: 20px;
+        }
+        .color-picker {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        .color-picker input {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <div id="profile-container" data-profile="{{ profile }}"></div>
+    <div id="data-container" data-algorithm="{{ data }}"></div>
     <!-- Kreise oben -->
     <div class="circles">
         <a href="{{ url_for('choose_profile') }}" class="circle">1</a>
@@ -18,11 +69,131 @@
     </div>
     
     <h1>Wie sollen die Datenpunkte verteilt werden</h1>
-    
-    <!-- Buttons -->
+
+    <!-- Farbpaletten Auswahl -->
+    <div class="color-palette-container">
+        <!-- Standardfarbpaletten -->
+        <div class="color-palette-row">
+            <div class="color-palette" id="palette1">
+                <div class="color-swatch" style="background-color: #003B46;"></div>
+                <div class="color-swatch" style="background-color: #07575B;"></div>
+                <div class="color-swatch" style="background-color: #66A5AD;"></div>
+                <div class="color-swatch" style="background-color: #C4DFE6;"></div>
+            </div>
+            <div class="color-palette" id="palette2">
+                <div class="color-swatch" style="background-color: #E63946;"></div>
+                <div class="color-swatch" style="background-color: #F1FAEE;"></div>
+                <div class="color-swatch" style="background-color: #A8DADC;"></div>
+                <div class="color-swatch" style="background-color: #457B9D;"></div>
+            </div>
+            <div class="color-palette" id="palette3">
+                <div class="color-swatch" style="background-color: #2A9D8F;"></div>
+                <div class="color-swatch" style="background-color: #264653;"></div>
+                <div class="color-swatch" style="background-color: #E9C46A;"></div>
+                <div class="color-swatch" style="background-color: #F4A261;"></div>
+            </div>
+            <div class="color-palette" id="palette4">
+                <div class="color-swatch" style="background-color: #8D99AE;"></div>
+                <div class="color-swatch" style="background-color: #B7B7A4;"></div>
+                <div class="color-swatch" style="background-color: #D9BF77;"></div>
+                <div class="color-swatch" style="background-color: #3D348B;"></div>
+            </div>
+        </div>
+        <!-- Zweite Reihe von 4 Paletten -->
+        <div class="color-palette-row">
+            <div class="color-palette" id="palette5">
+                <div class="color-swatch" style="background-color: #FF6F61;"></div>
+                <div class="color-swatch" style="background-color: #D4A5A5;"></div>
+                <div class="color-swatch" style="background-color: #392F5A;"></div>
+                <div class="color-swatch" style="background-color: #2E3A59;"></div>
+            </div>
+            <div class="color-palette" id="palette6">
+                <div class="color-swatch" style="background-color: #A4B1C2;"></div>
+                <div class="color-swatch" style="background-color: #F3D1DC;"></div>
+                <div class="color-swatch" style="background-color: #C1B6E1;"></div>
+                <div class="color-swatch" style="background-color: #F6D6AD;"></div>
+            </div>
+            <div class="color-palette" id="palette7">
+                <div class="color-swatch" style="background-color: #7D5BA6;"></div>
+                <div class="color-swatch" style="background-color: #FF6F91;"></div>
+                <div class="color-swatch" style="background-color: #D3C0E0;"></div>
+                <div class="color-swatch" style="background-color: #6A0572;"></div>
+            </div>
+            <div class="color-palette" id="palette8">
+                <div class="color-swatch" style="background-color: #E63946;"></div>
+                <div class="color-swatch" style="background-color: #6A0572;"></div>
+                <div class="color-swatch" style="background-color: #B1A7A6;"></div>
+                <div class="color-swatch" style="background-color: #2C2C54;"></div>
+            </div>
+        </div>
+
+        <!-- Benutzerdefinierte Farbpalette -->
+        <div class="color-palette-row">
+            <div class="color-palette" id="custom-palette">
+                <div class="color-picker" style="background-color: #FFFFFF;" onclick="chooseColor(this)"></div>
+                <div class="color-picker" style="background-color: #FFFFFF;" onclick="chooseColor(this)"></div>
+                <div class="color-picker" style="background-color: #FFFFFF;" onclick="chooseColor(this)"></div>
+                <div class="color-picker" style="background-color: #FFFFFF;" onclick="chooseColor(this)"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons für Verteilung -->
     <div class="buttons">
         <a href="{{ url_for('delaunay_random') }}" class="button">Random</a>
-        <a href="{{ url_for('delaunay_haeufigkeit') }}" class="button">Nach Häufigekit</a>
+        <a href="{{ url_for('delaunay_haeufigkeit') }}" class="button">Nach Häufigkeit</a>
     </div>
+
+    <!-- Scripts -->
+    <script>
+        document.querySelectorAll('.color-palette').forEach(palette => {
+            palette.addEventListener('click', function() {
+                document.querySelectorAll('.color-palette').forEach(p => p.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // Farbpalette als Array definieren
+                const colors = Array.from(this.querySelectorAll('.color-swatch')).map(swatch => swatch.style.backgroundColor);
+                localStorage.setItem('selectedColorPalette', JSON.stringify(colors));
+                console.log('Farbpalette gespeichert:', colors);
+            });
+        });
+
+        function chooseColor(element) {
+            const color = prompt("Geben Sie eine Farbe im Format #RRGGBB ein (z.B. #FF0000):");
+            if (color && /^#[0-9A-F]{6}$/i.test(color)) {
+                element.style.backgroundColor = color;
+                updateCustomPalette();
+            } else {
+                alert("Ungültige Farbe. Bitte geben Sie eine gültige Hex-Farbe ein.");
+            }
+        }
+
+        function updateCustomPalette() {
+            const customColors = Array.from(document.querySelectorAll('#custom-palette .color-picker')).map(picker => picker.style.backgroundColor);
+            // Konvertiere RGB zu Hex für die Speicherung
+            const hexColors = customColors.map(color => rgbToHex(color));
+            localStorage.setItem('selectedColorPalette', JSON.stringify(hexColors));
+            console.log('Benutzerdefinierte Farbpalette gespeichert:', hexColors);
+        }
+
+        function rgbToHex(rgb) {
+            if (rgb.startsWith('#')) return rgb; // Bereits im Hex-Format
+            let [r, g, b] = rgb.match(/\d+/g).map(Number);
+            return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1).toUpperCase()}`;
+        }
+
+        // Funktion zum Laden der benutzerdefinierten Palette beim Laden der Seite
+        window.addEventListener('load', function() {
+            const savedPalette = JSON.parse(localStorage.getItem('selectedColorPalette'));
+            if (savedPalette) {
+                const customPalette = document.querySelector('#custom-palette');
+                savedPalette.forEach((color, index) => {
+                    if (customPalette.children[index]) {
+                        customPalette.children[index].style.backgroundColor = color;
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

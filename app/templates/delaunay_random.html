@@ -7,8 +7,12 @@
     <title>Sketch</title>
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleArt.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleAuswahl.css') }}">
+    <style>
+      .canvas-container {
+        margin-top: 50px; /* Beispielwert, ändere ihn nach Bedarf */
+      }
+    </style>
     <!-- Libraries -->
     <script src="{{ url_for('static', filename='js/libraries/p5.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/libraries/p5.sound.min.js') }}"></script>
@@ -16,8 +20,15 @@
   </head>
 
   <body>
+    <div id="profile-container" data-profile="{{ profile }}"></div>
+    <div id="data-container" data-algorithm="{{ data }}"></div>
     <!-- JavaScript Files -->
+    <script src="{{ url_for('static', filename='js/elbenwald_hashtags_counts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/elbenwald_pixel_counts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/elbenwald_monthly_counts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/elbenwald_weekly_counts.js') }}"></script>
     <script src="{{ url_for('static', filename='js/dataHashtags.js') }}"></script>
     <script src="{{ url_for('static', filename='js/delaunaySketchRandom.js') }}"></script>
+
   </body>
 </html>

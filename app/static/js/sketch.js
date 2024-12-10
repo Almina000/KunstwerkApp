@@ -15,6 +15,18 @@ console.log(`Dreiecke: ${triangles}, Kreise: ${circles}, Rechtecke: ${rectangles
 // } else {
 //     console.log('Pixel-Farben:', pixelColors);
 // }
+const filterValue = localStorage.getItem('filter');
+
+if (filterValue === 'true') {
+  console.log('Filter ist aktiviert.');
+} else if (filterValue === 'false') {
+  console.log('Filter ist deaktiviert.');
+} else {
+  console.log('Filter-Zustand ist undefiniert oder nicht gesetzt.');
+}
+
+const sizeValue = parseFloat(localStorage.getItem('size'));
+console.log('Größe:', sizeValue);
 
 // sketch.js
 const profileName = JSON.parse(localStorage.getItem("profileName"));
@@ -29,10 +41,10 @@ console.log("Dataname von Flask:", dataName);  // Profilname in der Konsole ausg
 const canvasWidth = 768;
 const canvasHeight = 1080;
 
-const number = triangles + circles + rectangles;
-console.log(`gesamt: ${number}`);
+const totalShapes = triangles + circles + rectangles;
+console.log(`gesamt: ${totalShapes}`);
 
-let num = 10;
+//let num = 10; //10
 
 function preload() {
   customFont = loadFont('static/fonts/AbadiMT-ExtraLight.ttf');
@@ -42,6 +54,12 @@ function setup() {
 
   //Zeichne Leinwand
   createCanvas(canvasWidth, canvasHeight); 
+  if (document.getElementById('artwork')) {
+    canvas.parent('artwork');
+  } else {
+    console.error("Der Container 'artwork' existiert nicht im DOM.");
+  }
+
   background(255);
 
   let rectWidth = canvasWidth * 0.6;
@@ -79,7 +97,7 @@ function setup() {
   }
   topHashtags = topHashtags
     .sort((a, b) => b.count - a.count)  // Sortiere nach count in absteigender Reihenfolge
-    .slice(0, num);  // Schneide die obersten 'num' Elemente ab
+    .slice(0, totalShapes);  // Schneide die obersten 'num' Elemente ab
   let totalTopCount = topHashtags.reduce((sum, hashtag) => sum + hashtag.count, 0);
 
   // if (topHashtags.length < num){
@@ -99,16 +117,39 @@ function setup() {
     console.log(colors);
   } else {
     colors = [
-      "#1E90FF",  // Blau
-      "#FF4500",  // Rot-Orange
-      "#FFD700",  // Gelb
-      "#32CD32",  // Grün
-      "#8A2BE2",  // Lila
-      "#40E0D0",  // Türkis
-      "#FF6347",  // Tomatenrot
-      "#FF1493",  // Dunkles Pink
-      "#4682B4",  // Stahlblau
-      "#9370DB"   // Violett
+      "#1E90FF",    // Blau
+      "#FF4500",    // Rot-Orange
+      "#FFD700",    // Gelb
+      "#32CD32",    // Grün
+      "#8A2BE2",    // Lila
+      "#40E0D0",    // Türkis
+      "#FF6347",    // Tomatenrot
+      "#FF1493",    // Dunkles Pink
+      "#4682B4",    // Stahlblau
+      "#9370DB",    // Violett
+      "#DC143C",    // Karmesinrot
+      "#00FA9A",    // Mittelgrün
+      "#8B0000",    // Dunkelrot
+      "#00CED1",    // Türkisblau
+      "#FF8C00",    // Dunkelorange
+      "#228B22",    // Waldgrün
+      "#FFDAB9",    // Pfirsich
+      "#6A5ACD",    // Schieferblau
+      "#B22222",    // Feuerrot
+      "#7FFF00",    // Chartreuse
+      "#DDA0DD",    // Pflaume
+      "#FF7F50",    // Koralle
+      "#6495ED",    // Kornblumenblau
+      "#B8860B",    // Dunkelgoldbraun
+      "#3CB371",    // Mittleres Grün
+      "#C71585",    // Mittelpurpur
+      "#40E0D0",    // Türkis
+      "#E9967A",    // Lachsfarben
+      "#8B008B",    // Dunkelmagenta
+      "#00BFFF",    // Tiefes Himmelblau
+      "#FA8072",    // Lachrot
+      "#FF00FF"     // Magenta
+      
     ];
   }
   
@@ -121,8 +162,8 @@ function setup() {
   textSize(16);
   textAlign(LEFT, CENTER);
 
-  let leftCount = Math.ceil(number / 2); // Anzahl der Hashtags links
-  let rightCount = Math.floor(number / 2); // Anzahl der Hashtags rechts
+  let leftCount = Math.ceil(totalShapes / 2); // Anzahl der Hashtags links
+  let rightCount = Math.floor(totalShapes / 2); // Anzahl der Hashtags rechts
   
   // Zeichne die ersten 5 Hashtags im linken Block
   for (let index = 0; index < Math.min(leftCount, topHashtags.length); index++) {
@@ -177,13 +218,14 @@ function setup() {
 
   // Funktion aufrufen
   
-  let shapes = predictShape(num, triangles, circles, rectangles);
-  let surfaceAreas = calculateSurfaceArea(rectWidth, rectHeight, topHashtags, totalTopCount);
+  let shapes = predictShape(totalShapes, triangles, circles, rectangles);
+  let surfaceAreas = calculateSurfaceArea(rectWidth, rectHeight, topHashtags, totalTopCount, sizeValue);
   //drawPoints(rectX, rectY, rectWidth, rectHeight);
   console.log(`ShapeArray Kreis: ${shapes}`);
-  drawCircleForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfaceAreas, shapes);
+  drawCircleForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfaceAreas, shapes, filterValue);
   console.log(`ShapeArray Dreieck: ${shapes}`);
   drawTrianglesForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfaceAreas, shapes);
+  console.log('Rechtecke werden gezeichnet');
   drawRectanglesForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfaceAreas, shapes);
    
 }

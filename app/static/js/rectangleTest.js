@@ -1,6 +1,7 @@
 function drawRectanglesForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfaceAreas, shapes){
     
-    
+    console.log('RechteckeFunktion innen');
+    console.log("Formen:", shapes);
     let goldenRatio = 0.618;
     let sides = ["top", "right", "bottom", "left"];
   
@@ -54,11 +55,17 @@ function drawRectanglesForHashtag(rectX, rectY, rectWidth, rectHeight, colors, s
 
     for (let i = 0; i < shapes.length; i++) {
         if (shapes[i] === "rectangle") {
+
+            console.log("Aktuelle Form:", shapes[i]);
+            console.log("Farbe:", colors[i]);
+            console.log("Fläche:", surfaceAreas[i]);
+           
+
             let area = surfaceAreas[i];
             let color = colors[i];
 
             let side = random(sides);
-
+            console.log("Seite:", side);
             if (side === "top") {
                 drawRectangleTop(deltaVertical, rectX, rectY, rectWidth, rectHeight, pointLeftGreen, pointRightGreen, area, color);
             } else if (side === "right") {
@@ -86,8 +93,6 @@ function drawRectangleRight(deltaHorizontal, rectX, rectY, rectWidth, rectHeight
 
     // Berechnung des Abstands zwischen parallelen Linien
     let distance = area / height;
-
-
   
     // Berechnung der rechten Punkte
     let topRightX = randomTopBlue.x + distance;
@@ -292,3 +297,4 @@ function getValidRandomPoint(minX, maxX, delta) {
     } while (point < minX || point > maxX);
     return point;
 }
+

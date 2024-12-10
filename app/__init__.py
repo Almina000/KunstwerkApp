@@ -192,11 +192,15 @@ def choose_data():
 
 @app.route('/delaunay/random')
 def delaunay_random():
-    return render_template('delaunay_random.html')
+    profile_name = session.get('profile_name', 'default')
+    data_name = session.get('data_name', 'default')
+    return render_template('delaunay_random.html', profile=profile_name, data=data_name)
 
 @app.route('/delaunay/häufigkeit')
 def delaunay_haeufigkeit():
-    return render_template('delaunay_haeufigkeit.html')
+    profile_name = session.get('profile_name', 'default')
+    data_name = session.get('data_name', 'default')
+    return render_template('delaunay_haeufigkeit.html', profile=profile_name, data=data_name)
 
 # @app.route('/delaunay')
 # def delaunay():
@@ -204,7 +208,9 @@ def delaunay_haeufigkeit():
 
 @app.route('/delaunay-auswahl')
 def delaunay_auswahl():
-    return render_template('delaunayAuswahl.html')
+    profile_name = session.get('profile_name', 'default')
+    data_name = session.get('data_name', 'default')  # Hole den Profilnamen aus der Session oder setze einen Standardwert
+    return render_template('delaunayAuswahl.html', profile=profile_name, data=data_name)
 
 @app.route('/fibonacci')
 def fibonacci():

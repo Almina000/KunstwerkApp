@@ -53,5 +53,40 @@ function drawRectanglesForHashtag(rectX, rectY, rectWidth, rectHeight, colors, s
   console.log("Ziel-Fläche:", area);
   console.log("Berechnete Fläche:", calculatedArea);
 
+  drawTexturedRectangle(rectX, rectY, rectWidth, rectHeight, colors[0]);
+}
 
+function drawTexturedRectangle(x, y, width, height, baseColor) {
+  noStroke();
+  let density = 10000; // Anzahl der Punkte für die Textur
+
+  for (let i = 0; i < density; i++) {
+      let validPoint = false;
+      let px, py;
+
+      // Wiederhole, bis ein Punkt gefunden wird, der innerhalb des Rechtecks liegt
+      while (!validPoint) {
+          px = x + random(width); // Zufällige X-Koordinate innerhalb des Rechtecks
+          py = y + random(height); // Zufällige Y-Koordinate innerhalb des Rechtecks
+
+          // Überprüfen, ob der Punkt innerhalb des Rechtecks liegt (immer der Fall, wenn x und y auf der Fläche bleiben)
+          validPoint = (px >= x && px <= x + width && py >= y && py <= y + height);
+      }
+
+      // Perlin-Noise für zusätzliche Variation
+      let noiseValue = noise(px * 0.01, py * 0.01) * 0.5 + 0.5;
+      let size = map(noiseValue, 0, 1, 0.1, 4); // Punktgröße basierend auf Noise
+
+      let adjustBrightness = random(-0.05, 0.05); // Variiert Helligkeit zufällig
+      let adjustedColor;
+      if (adjustBrightness > 0) {
+          // Heller machen (Interpolate towards white)
+          adjustedColor = lerpColor(color(baseColor), color(255), adjustBrightness);
+      } else {
+          // Dunkler machen (Interpolate towards black)
+          adjustedColor = lerpColor(color(baseColor), color(0), -adjustBrightness);
+      }
+      fill(adjustedColor);
+      ellipse(px, py, size, size);
+  }
 }

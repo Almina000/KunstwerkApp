@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skizze Eingabe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styleAuswahl.css') }}" />
-    <script src="{{ url_for('static', filename='js/libraries/p5.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/libraries/p5.sound.min.js') }}"></script>
     <script>
       // Funktion zur Navigation
       function startArt() {
@@ -19,36 +17,10 @@
         const size = parseFloat(document.getElementById("sizeSlider").value);
         localStorage.setItem("size", size);
 
-        let topHashtags = [];
-        if (profileName === "elbenwald") {
-            switch (dataName) {
-                case "Hashtag":
-                    topHashtags = elbenwald_hashtagData;
-                    break;
-                case "Months":
-                    topHashtags = elbenwald_monthlyCounts;
-                    break;
-                case "Weeks":
-                    topHashtags = elbenwald_weeklyCounts;
-                    break;
-                case "Pixel":
-                    topHashtags = elbenwald_PixelData;
-                    break;
-            }
-        } else if (profileName === "google") {
-            topHashtags = google_hashtagData;
-        } else if (profileName === "kulturcafezett9") {
-            topHashtags = kulturcafezett9_hashtagData;
-        } else if (profileName === "cinecittamultiplexkino") {
-            topHashtags = cinecittamultiplexkino_hashtagData;
-        }
 
-        const maxShape = topHashtags.length;
-
-        if (total <= maxShape) {
+        if (total <= 10) {
           localStorage.setItem("shapeCounts", JSON.stringify({ triangles, circles, rectangles }));
           window.location.href = "{{ url_for('artwork') }}";
-        
         } else {
           document.getElementById("warning").style.display = "block";
         }
@@ -87,10 +59,6 @@
       
       <!-- Weiter-Button (initial aktiviert) -->
       <button id="startButton" onclick="startArt()">Weiter</button>
-    </div>
-     <!-- Platzhalter für das Canvas -->
-     <div id="artwork">
-      <!-- Hier wird die Canvas eingefügt -->
     </div>
     <script src="{{ url_for('static', filename='js/elbenwald_hashtags_counts.js') }}"></script>
     <script src="{{ url_for('static', filename='js/elbenwald_pixel_counts.js') }}"></script>
@@ -163,12 +131,5 @@
         checkTotal();
       };
     </script>
-     <script src="{{ url_for('static', filename='js/dataHashtags.js') }}"></script>
-     <script src="{{ url_for('static', filename='js/predictShape.js') }}"></script>
-     <script src="{{ url_for('static', filename='js/surfaceArea.js') }}"></script>
-     <script src="{{ url_for('static', filename='js/circle.js') }}"></script>
-     <script src="{{ url_for('static', filename='js/triangletest.js') }}"></script>
-     <script src="{{ url_for('static', filename='js/rectangleTest.js') }}"></script>
-     <script src="{{ url_for('static', filename='js/sketch.js') }}"></script>
   </body>
 </html>

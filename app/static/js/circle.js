@@ -1,4 +1,4 @@
-function drawCircleForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfaceAreas, shapes) {
+function drawCircleForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfaceAreas, shapes, filterValue) {
   
     let circles = []; // Array zum Speichern der gezeichneten Kreise
     let indexCount = 0;
@@ -38,8 +38,9 @@ function drawCircleForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfa
                 fill(baseColor);
                 noStroke();
                 ellipse(point.x, point.y, radius * 2, radius * 2);
-                drawTexturedCircle(point.x, point.y, radius, baseColor);
-
+                if (filterValue === 'true') {
+                    drawTexturedCircle(point.x, point.y, radius, baseColor);
+                } 
                 // Speichere den größten Kreis, um spätere Überlappungsprüfung zu ermöglichen
                 circles.push({ x: point.x, y: point.y, radius: radius });
                 indexCount++;
@@ -76,7 +77,10 @@ function drawCircleForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfa
                     fill(baseColor);
                     noStroke();
                     ellipse(x, y, radius * 2, radius * 2);
-                    drawTexturedCircle(x, y, radius, baseColor);
+
+                    if (filterValue === 'true') {
+                        drawTexturedCircle(x, y, radius, baseColor);
+                    } 
                     // Speichere die Informationen des gezeichneten Kreises
                     circles.push({ x: x, y: y, radius: radius });
                 }
@@ -133,3 +137,4 @@ function adjustColor(c, offset) {
     b = constrain(b + offset * 100, 0, 100); // Helligkeit anpassen
     return color(h, s, b);
 }
+

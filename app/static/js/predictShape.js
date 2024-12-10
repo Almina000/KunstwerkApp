@@ -18,7 +18,7 @@ function predictShape(number, triangles, circles, rectangles) {
     }
     else if (rectangles === number){
         for (let i = 0; i < number; i++){
-            shapes.push("rectangles");
+            shapes.push("rectangle");
         }
         console.log(`Shapes: ${shapes}`);
         return shapes;
