@@ -61,12 +61,18 @@ function setup() {
   }
 
   background(255);
+  
 
   let rectWidth = canvasWidth * 0.6;
   let rectHeight = canvasHeight * 0.5;
   let rectX = (canvasWidth - rectWidth) / 2;
   let rectY = canvasHeight * 0.1;
   
+  // Hintergrundfarbe nur für das Rechteck
+  fill('#FFFFFF'); // Hellblauer Hintergrund innerhalb des Rechtecks
+  noStroke(); // Kein Rand
+  rect(rectX, rectY, rectWidth, rectHeight);
+
   noFill();
   stroke(0);
   rect(rectX, rectY, rectWidth, rectHeight);
@@ -116,41 +122,100 @@ function setup() {
     colors = topHashtags.map(hashtag => hashtag.hashtag);
     console.log(colors);
   } else {
-    colors = [
-      "#1E90FF",    // Blau
-      "#FF4500",    // Rot-Orange
-      "#FFD700",    // Gelb
-      "#32CD32",    // Grün
-      "#8A2BE2",    // Lila
-      "#40E0D0",    // Türkis
-      "#FF6347",    // Tomatenrot
-      "#FF1493",    // Dunkles Pink
-      "#4682B4",    // Stahlblau
-      "#9370DB",    // Violett
-      "#DC143C",    // Karmesinrot
-      "#00FA9A",    // Mittelgrün
-      "#8B0000",    // Dunkelrot
-      "#00CED1",    // Türkisblau
-      "#FF8C00",    // Dunkelorange
-      "#228B22",    // Waldgrün
-      "#FFDAB9",    // Pfirsich
-      "#6A5ACD",    // Schieferblau
-      "#B22222",    // Feuerrot
-      "#7FFF00",    // Chartreuse
-      "#DDA0DD",    // Pflaume
-      "#FF7F50",    // Koralle
-      "#6495ED",    // Kornblumenblau
-      "#B8860B",    // Dunkelgoldbraun
-      "#3CB371",    // Mittleres Grün
-      "#C71585",    // Mittelpurpur
-      "#40E0D0",    // Türkis
-      "#E9967A",    // Lachsfarben
-      "#8B008B",    // Dunkelmagenta
-      "#00BFFF",    // Tiefes Himmelblau
-      "#FA8072",    // Lachrot
-      "#FF00FF"     // Magenta
+    // colors = [
+    //   "#1E90FF",    // Blau
+    //   "#FF4500",    // Rot-Orange
+    //   "#FFD700",    // Gelb
+    //   "#32CD32",    // Grün
+    //   "#8A2BE2",    // Lila
+    //   "#40E0D0",    // Türkis
+    //   "#FF6347",    // Tomatenrot
+    //   "#FF1493",    // Dunkles Pink
+    //   "#4682B4",    // Stahlblau
+    //   "#9370DB",    // Violett
+    //   "#DC143C",    // Karmesinrot
+    //   "#00FA9A",    // Mittelgrün
+    //   "#8B0000",    // Dunkelrot
+    //   "#00CED1",    // Türkisblau
+    //   "#FF8C00",    // Dunkelorange
+    //   "#228B22",    // Waldgrün
+    //   "#FFDAB9",    // Pfirsich
+    //   "#6A5ACD",    // Schieferblau
+    //   "#B22222",    // Feuerrot
+    //   "#7FFF00",    // Chartreuse
+    //   "#DDA0DD",    // Pflaume
+    //   "#FF7F50",    // Koralle
+    //   "#6495ED",    // Kornblumenblau
+    //   "#B8860B",    // Dunkelgoldbraun
+    //   "#3CB371",    // Mittleres Grün
+    //   "#C71585",    // Mittelpurpur
+    //   "#40E0D0",    // Türkis
+    //   "#E9967A",    // Lachsfarben
+    //   "#8B008B",    // Dunkelmagenta
+    //   "#00BFFF",    // Tiefes Himmelblau
+    //   "#FA8072",    // Lachrot
+    //   "#FF00FF"     // Magenta
       
+    // ];
+    colors = [
+      "#D6EAF8", // Pastell-Babyblau
+      "#B3E2E5", // Pastelltürkis
+      "#CBAACB", // Pastelllila
+      "#FFB7C5", // Pastellpink
+      "#779ECB", // Pastellstahlblau
+      "#D4A4E3", // Pastellviolett
+      "#FFDAC1", // Pastellpfirsich
+      "#ACE5EE", // Pastelltürkisblau
+      "#E6CFE3", // Pastellpflaume
+      // Ergänzende Farben
+      "#FFB347", // Pastellorange
+      "#FDFD96", // Pastellgelb
+      "#FF6961", // Pastellrot
+      "#E66666", // Pastellkarmesinrot
+      "#77DD77", // Pastellgrün
+      "#B5EAD7", // Pastellmittelgrün
+      "#C26E60", // Pastelldunkelrot
+      "#D8F5A2", // Pastellchartreuse
+      "#FFA07A", // Pastellkoralle
+      "#B0DFFB", // Pastellkornblumenblau
+      "#E8D2A3", // Pastelldunkelgoldbraun
+      "#95D3A2", // Pastellmittleres Grün
+      "#E2A7C9", // Pastellmittelpurpur
+      "#A4DFE7", // Pastelltürkis
+      "#FFC8B2", // Pastellsalmonfarben
+      "#C38EC7", // Pastelldunkelmagenta
+      "#89CFF0", // Pastelltiefes Himmelblau
+      "#FADADD", // Pastelllachrot
+      "#F2C8E6"  // Pastellmagenta
     ];
+    
+    // colors = [
+    //   "#F5A6C8", // Sanftes, leuchtendes Pink
+    //   "#A0D1D7", // Mildes Türkis
+    //   "#F4C6D7", // Pastelliges Pink mit Pfirsichhauch
+    //   "#7BCFD3", // Kräftiges, sanftes Türkis
+    //   "#F4A8D8", // Intensiverer Pinkton
+    //   "#6CC8D3", // Frisches, leuchtendes Türkis
+    //   "#F7B1C6", // Warmer, weicher Pinkton
+    //   "#90D4D8", // Ruhiges, blasses Türkis
+    //   "#F7B7D7", // Zartes, fast Pfirsichfarbenes Pink
+    //   "#63B8B2", // Tiefes, beruhigendes Türkis
+    // ];
+    // colors = [
+    //   "#FFFFFF", // Reines Weiß
+    //   "#D3D3D3", // Helles Grau
+    //   "#A9A9A9", // Dunkelgrau
+    //   "#FFD700", // Klassisches Gold
+    //   "#F5F5F5", // Sanftes, warmes Weiß
+    //   "#BEBEBE", // Mittleres Grau
+    //   "#FFCC00", // Heller Goldton
+    //   "#FAFAFA", // Fast Weiß mit Grauton
+    //   "#808080", // Neutralgrau
+    //   "#C0B200", // Gedämpfter Goldton
+    // ];
+    
+    
+    
   }
   
   // Zeichne die Legende unter dem Rechteck
@@ -200,20 +265,20 @@ function setup() {
   let y2 = rectY + rectHeight * (1 - goldenRatio);// Horizontale Linie 2
 
    // Vertikale Linie 1 (blau)
- // stroke(0, 0, 255); // Blau
-  //line(x1, rectY, x1, rectY + rectHeight);
+  stroke(0, 0, 255); // Blau
+  line(x1, rectY, x1, rectY + rectHeight);
 
 // Vertikale Linie 2 (rot)
-  //stroke(255, 0, 0); // Rot
-  //line(x2, rectY, x2, rectY + rectHeight);
+  stroke(255, 0, 0); // Rot
+  line(x2, rectY, x2, rectY + rectHeight);
 
 // Horizontale Linie 1 (lila)
-  //stroke(128, 0, 128); // Lila
-  //line(rectX, y1, rectX + rectWidth, y1);
+  stroke(128, 0, 128); // Lila
+  line(rectX, y1, rectX + rectWidth, y1);
 
 // Horizontale Linie 2 (grün)
-  //stroke(0, 255, 0); // Grün
-  //line(rectX, y2, rectX + rectWidth, y2);
+  stroke(0, 255, 0); // Grün
+  line(rectX, y2, rectX + rectWidth, y2);
   ////////////////////////////////////////////////////////////////
 
   // Funktion aufrufen

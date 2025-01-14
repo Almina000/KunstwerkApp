@@ -1,14 +1,12 @@
-const elbenwald_weeklyCounts = [
+const elbenwald_weeklyCounts = {
+    "weekly_counts": [
         {
-            "hashtag": "W5",
-            "count": 1
+            "week": "W3",
+            "count": 3
         },
         {
-            "hashtag": "W2",
-            "count": 10
-        },
-        {
-            "hashtag": "W1",
-            "count": 1
+            "week": "W2",
+            "count": 9
         }
-];
+    ]
+};

@@ -1,114 +1,134 @@
 const elbenwald_hashtagData = [
   {
-    "hashtag": "#harrypotter",
+    "hashtag": "#ramenbowl",
     "count": 1
   },
   {
-    "hashtag": "#harrypotterfans",
+    "hashtag": "#starwarskitchen",
     "count": 1
   },
   {
-    "hashtag": "#harrypotterb\u00fccher",
+    "hashtag": "#starwarsmerch",
+    "count": 1
+  },
+  {
+    "hashtag": "#starwarsfans",
     "count": 1
   },
   {
     "hashtag": "#elbenwald",
-    "count": 11
+    "count": 8
   },
   {
-    "hashtag": "#herrderringe",
+    "hashtag": "#godzillafans",
     "count": 1
   },
   {
-    "hashtag": "#herrderringefan",
+    "hashtag": "#godzillamerch",
     "count": 1
   },
   {
-    "hashtag": "#middleearth",
+    "hashtag": "#loungefly",
     "count": 1
   },
   {
-    "hashtag": "#middleearthfan",
+    "hashtag": "#rucksackliebe",
     "count": 1
   },
   {
-    "hashtag": "#puzzle",
+    "hashtag": "#liloandstitch",
     "count": 1
   },
   {
-    "hashtag": "#puzzles",
+    "hashtag": "#stitchfigur",
     "count": 1
   },
   {
-    "hashtag": "#elbenwaldadventskalender",
-    "count": 4
-  },
-  {
-    "hashtag": "#nerdychristmas",
-    "count": 6
-  },
-  {
-    "hashtag": "#narutokocht",
+    "hashtag": "#liloandstitchfans",
     "count": 1
   },
   {
-    "hashtag": "#narutoramen",
+    "hashtag": "#disneymerch",
     "count": 1
   },
   {
-    "hashtag": "#narutofans",
+    "hashtag": "#sanrioaesthetic",
     "count": 1
   },
   {
-    "hashtag": "#kochbuchliebe",
+    "hashtag": "#Sanriocharacters",
     "count": 1
   },
   {
-    "hashtag": "#ramenlover",
+    "hashtag": "#sanriomerch",
     "count": 1
   },
   {
-    "hashtag": "#sesamstrasse",
+    "hashtag": "#sanriofans",
     "count": 1
   },
   {
-    "hashtag": "#kr\u00fcmelmonster",
+    "hashtag": "#kawaiiaesthetic",
     "count": 1
   },
   {
-    "hashtag": "#kekse",
+    "hashtag": "#dietageb\u00fccherderapothekerin",
     "count": 1
   },
   {
-    "hashtag": "#elbenwaldstore",
+    "hashtag": "#theapothecarydiaries",
+    "count": 1
+  },
+  {
+    "hashtag": "#kusuriyanohitorigoto",
+    "count": 1
+  },
+  {
+    "hashtag": "#animefans",
     "count": 2
   },
   {
-    "hashtag": "#wintervibes",
-    "count": 1
-  },
-  {
-    "hashtag": "#winterfashion",
-    "count": 1
-  },
-  {
-    "hashtag": "#winteroutfit",
-    "count": 1
-  },
-  {
-    "hashtag": "#cybermonday",
-    "count": 1
-  },
-  {
-    "hashtag": "#nerdsofinstagram",
+    "hashtag": "#animemerch",
     "count": 2
   },
   {
-    "hashtag": "#blackfriday2024",
+    "hashtag": "#harrypottermerch",
     "count": 1
   },
   {
-    "hashtag": "#blackfridaysale",
+    "hashtag": "#harrypotterzauberst\u00e4be",
+    "count": 1
+  },
+  {
+    "hashtag": "#severussnape",
+    "count": 1
+  },
+  {
+    "hashtag": "#afterallthistimealways",
+    "count": 1
+  },
+  {
+    "hashtag": "#onepiece",
+    "count": 1
+  },
+  {
+    "hashtag": "#onepiecefans",
+    "count": 1
+  },
+  {
+    "hashtag": "#onepiecemerch",
+    "count": 1
+  },
+  {
+    "hashtag": "#sockenliebe",
+    "count": 1
+  },
+  {
+    "hashtag": "#figurensammlung",
+    "count": 1
+  },
+  {
+    "hashtag": "#herrderringefans",
     "count": 1
   }
 ];

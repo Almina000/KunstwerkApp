@@ -1,10 +1,8 @@
-const elbenwald_monthlyCounts = [
+const elbenwald_monthlyCounts = {
+    "monthly_counts": [
         {
-            "hashtag": "November",
-            "count": 1
-        },
-        {
-            "hashtag": "December",
-            "count": 11
+            "month": "January",
+            "count": 12
         }
-];
+    ]
+};

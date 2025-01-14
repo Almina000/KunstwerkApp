@@ -2,7 +2,7 @@ let seedPoints = [];
 let delaunay;
 
 //const num = 10; // Anzahl der Top-Hashtags, die betrachtet werden sollen
-let topHashtags = hashtagData
+let topHashtags = elbenwald_hashtagData
   .sort((a, b) => b.count - a.count)
   //.slice(0, num); // Wähle die Top `num` Hashtags
 let maxCount = Math.max(...topHashtags.map(hashtag => hashtag.count));
@@ -26,7 +26,9 @@ function draw() {
   background(255);
 
   // Definiere die Farbpalette
-  const colorPalette = ['#003B46', '#07575B', '#66A5AD', '#C4DFE6'];
+  //const colorPalette = ['#003B46', '#07575B', '#66A5AD', '#C4DFE6'];
+  //const colorPalette = ['#375E97', '#FB6542', '#FFBB00', '#3F681C'];
+  const colorPalette = ['#98DBC6', '#5BC8AC', '#E6D72A', '#F18D9E'];
 
   let voronoi = delaunay.voronoi([0, 0, width, height]);
   let polygons = voronoi.cellPolygons();
@@ -34,7 +36,6 @@ function draw() {
     console.log(poly);
     beginShape();
     for (let i = 0; i < poly.length; i++){
-      // Wähle eine zufällige Farbe aus der Palette
       let randomColor = colorPalette[int(random(colorPalette.length))];
       stroke(0);
       strokeWeight(2);

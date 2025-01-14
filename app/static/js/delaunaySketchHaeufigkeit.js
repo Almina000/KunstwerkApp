@@ -56,15 +56,13 @@ function setup() {
     createCanvas(400, 400);
 
     if (mode === 'random') {
-        // Generiere zufällige Punkte
         for (let i = 0; i < topHashtags.length; i++) {
             seedPoints[i] = createVector(random(width), random(height));
         }
     } else if (mode === 'häufigkeit') {
-        // Punkte basierend auf Häufigkeit verteilen
         for (let i = 0; i < topHashtags.length; i++) {
-            let x = random(width); // Zufällige X-Position
-            let y = map(topHashtags[i].count, 0, maxCount, height, 0); // Y basierend auf Häufigkeit
+            let x = random(width); 
+            let y = map(topHashtags[i].count, 0, maxCount, height, 0);
             seedPoints[i] = createVector(x, y);
         }
     }

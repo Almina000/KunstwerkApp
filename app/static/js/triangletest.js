@@ -10,7 +10,6 @@ function drawTrianglesForHashtag(rectX, rectY, rectWidth, rectHeight, colors, su
     let y2 = rectY + rectHeight * (1 - goldenRatio);// Horizontale Linie 4 GRÜN
   
     // Zählt die Anzahl der gezeichneten Dreiecke auf den Fibonacci-Achsen
-   
     for (let i = 0; i < shapes.length; i++) {
         if (shapes[i] === "triangle") {
             console.log(`Shape: ${shapes[i]}`);
@@ -28,19 +27,19 @@ function drawTrianglesForHashtag(rectX, rectY, rectWidth, rectHeight, colors, su
             if (sides.length > 0) {
             // Zeichne das Dreieck auf den Fibonacci-Achsen
                 let pointA = getRandomPointA(rectX, rectY, rectWidth, rectHeight, side);
-                // fill(0, 0, 255); // RGB-Werte für Blau (R=0, G=0, B=255)
-                // noStroke();      // Kein Rand um den Punkt (optional)
-                // ellipse(pointA.x, pointA.y, 5, 5); // kleiner Kreis mit Radius 5
+                fill(0, 0, 255); // RGB-Werte für Blau (R=0, G=0, B=255)
+                noStroke();      // Kein Rand um den Punkt (optional)
+                ellipse(pointA.x, pointA.y, 5, 5); // kleiner Kreis mit Radius 5
 
                 let pointB = getRandomPointB(side, x1, x2, rectX, rectY, rectWidth, rectHeight, y1, y2);
-                // fill(0, 255, 0); // RGB-Werte für Blau (R=0, G=0, B=255)
-                // noStroke();      // Kein Rand um den Punkt (optional)
-                // ellipse(pointB.x, pointB.y, 5, 5); // kleiner Kreis mit Radius 5
+                fill(0, 255, 0); // RGB-Werte für Blau (R=0, G=0, B=255)
+                noStroke();      // Kein Rand um den Punkt (optional)
+                ellipse(pointB.x, pointB.y, 5, 5); // kleiner Kreis mit Radius 5
   
                 let pointC = getPointC(pointA, pointB, area, rectX, rectY, rectWidth, rectHeight);
-                // fill(255, 0, 0); // RGB-Werte für Blau (R=0, G=0, B=255)
-                // noStroke();      // Kein Rand um den Punkt (optional)
-                // ellipse(pointC.x, pointC.y, 5, 5); // kleiner Kreis mit Radius 5
+                fill(255, 0, 0); // RGB-Werte für Blau (R=0, G=0, B=255)
+                noStroke();      // Kein Rand um den Punkt (optional)
+                ellipse(pointC.x, pointC.y, 5, 5); // kleiner Kreis mit Radius 5
 
                 fill(colorTri); // Farbe des Dreiecks
                 noStroke();

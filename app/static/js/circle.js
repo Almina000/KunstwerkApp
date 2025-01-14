@@ -18,11 +18,11 @@ function drawCircleForHashtag(rectX, rectY, rectWidth, rectHeight, colors, surfa
         { x: x2, y: y2 }
     ];
 
-    // fill(255, 0, 0); // Rot
-    // noStroke();
-    // goldenPoints.forEach(point => {
-    //   ellipse(point.x, point.y, 10, 10); // Zeichne kleine Kreise zur Markierung
-    // });
+    fill(255, 0, 0); // Rot
+    noStroke();
+    goldenPoints.forEach(point => {
+      ellipse(point.x, point.y, 10, 10); // Zeichne kleine Kreise zur Markierung
+    });
 
     // Zeichne Kreise für die 10 häufigsten Hashtags
     surfaceAreas.forEach((area, index) => {

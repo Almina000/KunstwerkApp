@@ -6,16 +6,27 @@
 
     <title>Sketch</title>
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleArt.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleAuswahl.css') }}">
+    <style>
+      .canvas-container {
+        margin-top: 100px; 
+      }
+    </style>
+
+
     <script src="https://d3js.org/d3-delaunay.v6.min.js"></script>
     <script src="https://unpkg.com/d3-weighted-voronoi/dist/d3-weighted-voronoi.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-weighted-voronoi"></script>
     <script src="{{ url_for('static', filename='libraries/p5.min.js') }}"></script>
     <script src="{{ url_for('static', filename='libraries/p5.sound.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js-sound/1.6.0/p5.sound.min.js"></script>
+
 
   </head>
 
   <body>
-    <script src="{{ url_for('static', filename='dataHashtags.js') }}"></script>
-    <script src="{{ url_for('static', filename='voronoiSketch.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/elbenwald_hashtags_counts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voronoiSketch.js') }}"></script>
   </body>
 </html>

@@ -2,7 +2,7 @@ let points = [];
 let delaunay, voronoi;
 
 const x = 20; // Anzahl der Top-Hashtags
-let topHashtags = hashtagData
+let topHashtags = elbenwald_hashtagData
   .sort((a, b) => b.count - a.count)
   .slice(0, x); // Wähle die Top 10 Hashtags
 let maxCount = Math.max(...topHashtags.map(hashtag => hashtag.count));
